@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>test</title>
+<script>
+function getRoute() {
+    fetch('/getRoute')
+        .then(response => response.json())
+        .then(data => alert(JSON.stringify(data)));
+}
+
+function initialize() {
+    fetch('/initialize')
+        .then(response => response.json())
+        .then(data => alert(JSON.stringify(data)));
+}
+
+function getJsonData() {
+    fetch('/getJsonData')
+        .then(response => response.json())
+        .then(data => alert("DATA AUS FILE: " + JSON.stringify(data)));
+}
+
+async function createAndShowAllNodeIds() {
+            for (let i = 0; i < 10000; i++) {
+                const response = await fetch('/createNode');
+                const data = await response.json();
+                console.log(data.nodeId, data.randomType);
+            }
+        }
+</script>
+</head>
+<body>
+<h1>testing aufruf</h1>
+<button onclick="getRoute()">Route</button>
+<button onclick="initialize()">Init</button>
+<button onclick="getJsonData()">JSON</button>
+<button onclick="createAndShowAllNodeIds()">testing ids in console</button>
+</body>
+</html>
