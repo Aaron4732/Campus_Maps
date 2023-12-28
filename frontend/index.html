@@ -2,34 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>test</title>
-<script>
-function getRoute() {
-    fetch('/getRoute')
-        .then(response => response.json())
-        .then(data => alert(JSON.stringify(data)));
-}
-
-function initialize() {
-    fetch('/initialize')
-        .then(response => response.json())
-        .then(data => alert(JSON.stringify(data)));
-}
-
-function getJsonData() {
-    fetch('/getJsonData')
-        .then(response => response.json())
-        .then(data => alert("DATA AUS FILE: " + JSON.stringify(data)));
-}
-
-async function createAndShowAllNodeIds() {
-            for (let i = 0; i < 10000; i++) {
-                const response = await fetch('/createNode');
-                const data = await response.json();
-                console.log(data.nodeId, data.randomType);
-            }
-        }
-</script>
+<title>FH Mamps</title>
+<link rel="stylesheet" href="index.css" />
+<script type="module" src="index.js"></script>
 </head>
 <body>
 <h1>testing aufruf</h1>
@@ -37,5 +12,8 @@ async function createAndShowAllNodeIds() {
 <button onclick="initialize()">Init</button>
 <button onclick="getJsonData()">JSON</button>
 <button onclick="createAndShowAllNodeIds()">testing ids in console</button>
+
+<canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;"></canvas>
+
 </body>
 </html>
