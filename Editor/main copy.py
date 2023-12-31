@@ -1,6 +1,28 @@
 import pygame
 import sys
 
+from lib.circle import c_circle as circle_class
+
+#Save Circles list as jason
+import json
+def save_circles():
+    #Schreiben der Kreise in ein Dictionary
+    circles_dict = {}
+    for key, circle in circle_class.circles.items():
+        circles_dict[circle.id] = {
+            "x": circle.x,
+            "y": circle.y,
+            "node_type": circle.node_type,
+            "floor": circle.floor,
+            "connections": circle.connections,
+            "name": circle.name,
+            "id": circle.id
+        }
+
+    with open("circles.json", "w") as f:
+        json.dump(circles_dict, f)
+
+
 def main():
     pygame.init()
 
@@ -11,9 +33,9 @@ def main():
 
     # Liste der Hintergrundbilder
     background_images = [
-        ('maps\\05 Stammhaus E0-Bestandsplan B-1.png', "E0"), 
-        ('maps\\05 Stammhaus E1-Bestandsplan B-1.png', "E1"),
-        ('maps\\05 Stammhaus E2-Bestandsplan B-1.png', "E2")]  # Pfad zu Ihren Bildern
+        ('maps\\E1_B.png', "E1"), 
+        ('maps\\E2_B.png', "E2"),
+        ('maps\\E3_B.png', "E3")]  # Pfad zu Ihren Bildern
     current_image_index = 0
     background_image = pygame.image.load(background_images[current_image_index][0])
     background_rect = background_image.get_rect(center=(width // 2, height // 2))
@@ -23,7 +45,8 @@ def main():
     dragging = False
     mode = "New"  # Anfangsmodus
     node_type = "Way"
-    circles = []  # Liste für Kreispositionen
+    #circles = []  # Liste für Kreispositionen
+    circles = circle_class.circles
     connections = []  # Liste für Verbindungen zwischen Kreisen
     selected_circle = None  # Aktuell ausgewählter Kreis
     moving_circle = None  # Zu bewegender Kreis
@@ -50,12 +73,6 @@ def main():
         "Others": "T",
     }
 
-    def get_circle_at_pos(pos):
-        for i, (x, y) in enumerate(circles):
-            if (x - pos[0]) ** 2 + (y - pos[1]) ** 2 <= 100:  # Kreisradius^2
-                return i
-        return None
-
     clock = pygame.time.Clock()
 
     # Hauptprogrammschleife
@@ -75,29 +92,29 @@ def main():
                     elif mode == "Move" and event.button == 1:
                         # Überprüfen, ob ein Kreis angeklickt wurde und für Bewegung markieren
                         mouse_x, mouse_y = event.pos
-                        moving_circle = get_circle_at_pos((mouse_x - background_rect.x, mouse_y - background_rect.y))
-
+                        moving_circle = circle_class.get_circle_at_pos((mouse_x - background_rect.x, mouse_y - background_rect.y))
                     elif mode == "Delet" and event.button == 1:
                         # Überprüfen, ob ein Kreis angeklickt wurde und löschen
                         mouse_x, mouse_y = event.pos
-                        clicked_circle = get_circle_at_pos((mouse_x - background_rect.x, mouse_y - background_rect.y))
+                        clicked_circle = circle_class.get_circle_at_pos((mouse_x - background_rect.x, mouse_y - background_rect.y))
                         if clicked_circle is not None:
                             # Entfernen des Kreises
-                            circles.pop(clicked_circle)
+                            clicked_circle.delet()
 
                     elif mode == "Connect" and event.button == 1:
                         # Überprüfen, ob ein Kreis angeklickt wurde
                         mouse_x, mouse_y = event.pos
-                        clicked_circle = get_circle_at_pos((mouse_x - background_rect.x, mouse_y - background_rect.y))
+                        clicked_circle = circle_class.get_circle_at_pos((mouse_x - background_rect.x, mouse_y - background_rect.y))
                         if clicked_circle is not None:
                             if selected_circle is None:
                                 selected_circle = clicked_circle
                             else:
-                                new_connection = (min(selected_circle, clicked_circle), max(selected_circle, clicked_circle))
-                                if new_connection in connections:
-                                    connections.remove(new_connection)
+                                if clicked_circle.id in selected_circle.connections:
+                                    selected_circle.disconnect(clicked_circle)
+
                                 else:
-                                    connections.append(new_connection)
+                                    selected_circle.connect(clicked_circle)
+
                                 selected_circle = None
                         else:
                             selected_circle = None
@@ -107,9 +124,11 @@ def main():
                             menu_active = True
                             menu_pos = event.pos
                         # Kreis hinzufügen
-                        mouse_x, mouse_y = event.pos
-                        circle_pos = (mouse_x - background_rect.x, mouse_y - background_rect.y)
-                        circles.append(circle_pos)
+                        else:
+                            mouse_x, mouse_y = event.pos
+                            circle_pos = (mouse_x - background_rect.x, mouse_y - background_rect.y)
+
+                            circle_class.new_circle(circle_pos[0], circle_pos[1], node_type, background_images[current_image_index][1], circle_pos)
 
                 elif event.type == pygame.MOUSEBUTTONUP:
                     if event.button == 3:  # Rechte Maustaste loslassen
@@ -125,9 +144,12 @@ def main():
                     elif moving_circle is not None:
                         # Bewegen des ausgewählten Kreises
                         mouse_x, mouse_y = event.pos
-                        circles[moving_circle] = (mouse_x - background_rect.x, mouse_y - background_rect.y)
+                        moving_circle.move(mouse_x - background_rect.x, mouse_y - background_rect.y)
+
+
 
                 elif event.type == pygame.MOUSEWHEEL:
+                    break
                     mouse_x, mouse_y = pygame.mouse.get_pos()
                     zoom_change = 1.1 if event.y > 0 else 0.9
                     scale *= zoom_change
@@ -139,7 +161,13 @@ def main():
                     background_rect.y += (mouse_y - background_rect.y) * (1 - zoom_change)
 
                     # Aktualisieren der Kreispositionen
-                    circles = [(x * zoom_change, y * zoom_change) for x, y in circles]
+                    #circles = [(x * zoom_change, y * zoom_change) for x, y in circles]
+
+                    for key, circle in circles.items():
+                        circle.x *= zoom_change
+                        circle.y *= zoom_change
+
+
                     
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_c:
@@ -151,7 +179,7 @@ def main():
                     elif event.key == pygame.K_m:
                         mode = "Move"
                     elif event.key == pygame.K_s:
-                        mode = "Save"
+                        save_circles()
 
                     elif event.key == pygame.K_w:
                         node_type = "Way"
@@ -171,10 +199,16 @@ def main():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                 # Logik zur Auswahl von Menüoptionen
                     mouse_x, mouse_y = event.pos
-                    for i, option in enumerate(menu_options):
+                    for i, option in enumerate(circle_class.get_node_types()):
                         option_rect = pygame.Rect(menu_pos[0], menu_pos[1] + i * 30, 100, 30)
                         if option_rect.collidepoint(mouse_x, mouse_y):
                             selected_option = option
+
+                            mouse_x, mouse_y = event.pos
+                            circle_pos = (mouse_x - background_rect.x, mouse_y - background_rect.y)
+
+                            circle_class.new_circle(circle_pos[0], circle_pos[1], selected_option, background_images[current_image_index][1], circle_pos)
+
                             menu_active = False
                             # Hier können Sie die Logik hinzufügen, um den Kreis mit der ausgewählten Option zu erstellen
                             break
@@ -190,16 +224,28 @@ def main():
         scaled_image = pygame.transform.scale(background_image, (background_rect.width, background_rect.height))
         screen.blit(scaled_image, background_rect)
 
-        # Kreise zeichnen
-        for i, (x, y) in enumerate(circles):
-            color = (0, 0, 255) if i == selected_circle else (255, 0, 0)
-            pygame.draw.circle(screen, color, (background_rect.x + x, background_rect.y + y), 10)
+        #Kreis zeichnen
+        for key, circle in circles.items():
+            if circle.floor == background_images[current_image_index][1]:
+                color = (0, 0, 255) if circle != selected_circle else (255, 0, 0)
+                pygame.draw.circle(screen, color, (background_rect.x + circle.x, background_rect.y + circle.y), 10)
 
-         # Verbindungen zeichnen
-        for start, end in connections:
-            start_pos = (background_rect.x + circles[start][0], background_rect.y + circles[start][1])
-            end_pos = (background_rect.x + circles[end][0], background_rect.y + circles[end][1])
-            pygame.draw.line(screen, (0, 255, 0), start_pos, end_pos, 2)
+        # Verbindungen zeichnen
+        for key, circle in circles.items():
+            for opposit_circle in circle.connections:
+                if circle.floor == background_images[current_image_index][1] or circles[opposit_circle].floor == background_images[current_image_index][1]:
+                    start_pos = (background_rect.x + circle.x, background_rect.y + circle.y)
+                    end_pos = (background_rect.x + circles[opposit_circle].x, background_rect.y + circles[opposit_circle].y)
+                    pygame.draw.line(screen, (0, 255, 0), start_pos, end_pos, 2)
+
+        #Text zu Kreisen zeichnen
+        for key, circle in circles.items():
+            if circle.floor == background_images[current_image_index][1]:
+                text = font.render(circle.node_type, True, (0, 0, 0))
+                screen.blit(text, (background_rect.x + circle.x, background_rect.y + circle.y))
+                text = font.render(circle.name, True, (0, 0, 0))
+                screen.blit(text, (background_rect.x + circle.x, background_rect.y + circle.y - 30))
+
 
 
     #Linke Anzeige
@@ -238,7 +284,7 @@ def main():
 
         # Menü zeichnen
         if menu_active:
-            for i, option in enumerate(menu_options):
+            for i, option in enumerate(circle_class.get_node_types()):
                 option_rect = pygame.Rect(menu_pos[0], menu_pos[1] + i * 30, 100, 30)
                 pygame.draw.rect(screen, (200, 200, 200), option_rect)
                 text_color = (255, 0, 0) if option_rect.collidepoint(mouse_x, mouse_y) else (0, 0, 0)
