@@ -104,6 +104,9 @@ def main():
                             selected_circle = None
 
                     elif mode == "New" and event.button == 1:
+                        if node_type == "Others":
+                            menu_active = True
+                            menu_pos = event.pos
                         # Kreis hinzufügen
                         mouse_x, mouse_y = event.pos
                         circle_pos = (mouse_x - background_rect.x, mouse_y - background_rect.y)
@@ -167,6 +170,19 @@ def main():
                         current_image_index = (current_image_index + 1) % len(background_images)
                         background_image = pygame.image.load(background_images[current_image_index][0])
 
+            elif menu_active:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                # Logik zur Auswahl von Menüoptionen
+                    mouse_x, mouse_y = event.pos
+                    for i, option in enumerate(menu_options):
+                        option_rect = pygame.Rect(menu_pos[0], menu_pos[1] + i * 30, 100, 30)
+                        if option_rect.collidepoint(mouse_x, mouse_y):
+                            selected_option = option
+                            menu_active = False
+                            # Hier können Sie die Logik hinzufügen, um den Kreis mit der ausgewählten Option zu erstellen
+                            break
+
+
         # Mausposition relativ zum Bild
         mouse_x, mouse_y = pygame.mouse.get_pos()
         relative_mouse_pos = (mouse_x - background_rect.x, mouse_y - background_rect.y)
@@ -222,6 +238,15 @@ def main():
             image_text = font.render(display_name, True, text_color)
             screen.blit(image_text, (width + 10 - sidebar_width, y))
             y += 30
+
+        # Menü zeichnen
+        if menu_active:
+            for i, option in enumerate(menu_options):
+                option_rect = pygame.Rect(menu_pos[0], menu_pos[1] + i * 30, 100, 30)
+                pygame.draw.rect(screen, (200, 200, 200), option_rect)
+                text_color = (255, 0, 0) if option_rect.collidepoint(mouse_x, mouse_y) else (0, 0, 0)
+                option_text = font.render(option, True, text_color)
+                screen.blit(option_text, (menu_pos[0] + 10, menu_pos[1] + i * 30))
 
 
         pygame.display.flip()
