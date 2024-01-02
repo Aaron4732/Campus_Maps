@@ -4,11 +4,11 @@ function getRoute() {
         .then(data => alert(JSON.stringify(data)));
 }
 
-function initialize() {
-    fetch('/initialize')
-        .then(response => response.json())
-        .then(data => alert(JSON.stringify(data)));
-}
+// function initialize() {
+//     fetch('/initialize')
+//         .then(response => response.json())
+//         .then(data => alert(JSON.stringify(data)));
+// }
 
 function getJsonData() {
     fetch('/getJsonData')

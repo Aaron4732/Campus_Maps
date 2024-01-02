@@ -1,0 +1,28 @@
+.select2-container {
+    width: 10% !important; 
+}
+
+/* Stil für den Container der aktuellen Route */
+#currentRoute {
+    margin-top: 20px;
+    /* Weitere Stiloptionen nach Bedarf */
+}
+
+/* Stil für den Container der vorherigen Routen */
+#previousRoutesContainer {
+    margin-top: 20px;
+    /* Weitere Stiloptionen nach Bedarf */
+}
+
+/* Stil für die Liste der vorherigen Routen */
+#previousRoutes {
+    list-style-type: none; /* Entfernt Bullet Points */
+    padding: 0;
+}
+
+#previousRoutes li {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
