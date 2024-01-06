@@ -1,11 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-//wird im controller schonmal eingelesen '/initalize'
-//sollte eig nicht so sein, hier sollten einfach nur die erstellten nodes verwendet werden
-//funktioniert nicht wrkl Von B.1.3 nach B.1.13 geht, nur sehr wenige routen gehen,
-//rückwärts von zb x.x.16 nach x.x.2 gehts nicht
-
 //im circles.json ist nicht ganz ersichtlich was womit gemeint ist
 function loadNodes() {
     const filePath = path.join(__dirname, '..', 'Campus_Maps', 'Editor', 'circles.json');
@@ -34,15 +29,35 @@ function convertToFormattedId(numericId) {
 }
 
 function aStar(startId, endId, nodes) {
+    // Hilfsfunktionen
+    function heuristic(nodeA, nodeB) {
+        // Euklidische Distanz als Heuristik
+        const dx = Math.abs(nodeA.x - nodeB.x);
+        const dy = Math.abs(nodeA.y - nodeB.y);
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function reconstructPath(cameFrom, current) {
+        let totalPath = [current];
+        while (current in cameFrom) {
+            current = cameFrom[current];
+            totalPath.unshift(current);
+        }
+        return totalPath;
+    }
+
+    // Initialisierung
     let openSet = new Set([startId]);
-    let cameFrom = new Map();
+    let cameFrom = {};
+    let gScore = {}; // Kosten vom Startknoten bis zum aktuellen Knoten
+    let fScore = {}; // Geschätzte Kosten vom Start bis zum Ziel über diesen Knoten
 
-    let gScore = {};
-    Object.keys(nodes).forEach(nodeId => gScore[nodeId] = Infinity);
+    nodes.forEach(node => {
+        gScore[node.id] = Infinity;
+        fScore[node.id] = Infinity;
+    });
+
     gScore[startId] = 0;
-
-    let fScore = {};
-    Object.keys(nodes).forEach(nodeId => fScore[nodeId] = Infinity);
     fScore[startId] = heuristic(nodes[startId], nodes[endId]);
 
     while (openSet.size > 0) {
@@ -53,23 +68,24 @@ function aStar(startId, endId, nodes) {
         }
 
         openSet.delete(current);
-        getNeighbors(current, nodes).forEach(neighbor => {
-            let tentativeGScore = gScore[current] + heuristic(nodes[current], neighbor);
+        let neighbors = nodes[current].connections;
 
-            if (tentativeGScore < gScore[neighbor.id]) {
-                cameFrom.set(neighbor.id, current);
-                gScore[neighbor.id] = tentativeGScore;
-                fScore[neighbor.id] = tentativeGScore + heuristic(neighbor, nodes[endId]);
-
-                if (!openSet.has(neighbor.id)) {
-                    openSet.add(neighbor.id);
+        neighbors.forEach((neighbor) => {
+            let tentative_gScore = gScore[current] + heuristic(nodes[current], nodes[neighbor]);
+            if (tentative_gScore < gScore[neighbor]) {
+                cameFrom[neighbor] = current;
+                gScore[neighbor] = tentative_gScore;
+                fScore[neighbor] = gScore[neighbor] + heuristic(nodes[neighbor], nodes[endId]);
+                if (!openSet.has(neighbor)) {
+                    openSet.add(neighbor);
                 }
             }
         });
     }
 
-    return false;
+    return []; // Kein Pfad gefunden
 }
+
 
 function reconstructPath(cameFrom, current) {
     let totalPath = [current];

@@ -19,7 +19,8 @@ app.use(session({
     secure: false, //only for https
   }
 }));
-
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());  
 app.use(express.json()) //für cookie von lastRoute
 
 
@@ -67,14 +68,41 @@ app.get('/calculateRoute', (req, res) => {
 });
 
 app.post('/saveRoute', (req, res) => {
-  const { startId, endId } = req.body;
-  const route = { startId, endId };
+  const { startId, endId, isBarrierFree, extrastops } = req.body;
+  const newRoute = { startId, endId, isBarrierFree, extrastops };
 
-  // Cookie setzen
-  res.cookie('lastRoute', JSON.stringify(route), { maxAge: 86400000, httpOnly: true });
-  console.log("ROUTE SPEICHERN")
-  res.json({ message: 'Route gespeichert' });
+  try {
+    // Lesen des vorhandenen Cookies
+    const existingRoutes = req.cookies.lastRoute ? JSON.parse(req.cookies.lastRoute) : [];
+    
+    // Hinzufügen der neuen Route zum Array
+    existingRoutes.push(newRoute);
+
+    // Aktualisieren des Cookies mit dem neuen Array von Routen
+    res.cookie('lastRoute', JSON.stringify(existingRoutes), { maxAge: 86400000, httpOnly: true });
+    res.json({ message: 'Route gespeichert' });
+  } catch (error) {
+    console.error('Fehler beim Speichern der Route:', error);
+    res.status(500).json({ error: 'Fehler beim Speichern der Route' });
+  }
 });
+
+app.get('/getLastRoute', (req, res) => {
+  try {
+      const lastRoutes = req.cookies.lastRoute;
+      console.log(lastRoutes)
+      if (!lastRoutes) {
+          return res.status(404).json({ message: 'Keine gespeicherten Routen gefunden' });
+      }
+
+      const routes = JSON.parse(lastRoutes);
+      res.json(routes);
+  } catch (error) {
+      console.error('Fehler beim Abrufen der letzten Routen:', error);
+      res.status(500).json({ error: 'Serverfehler beim Abrufen der letzten Routen' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

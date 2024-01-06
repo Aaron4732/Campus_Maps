@@ -72,7 +72,6 @@ function draw() {
     ctx.strokeStyle = 'red'; // Farbe der Linie
     ctx.lineWidth = 2; // Dicke der Linie
     drawLine(linePoints);
-
     ctx.restore();
 }
 
@@ -85,9 +84,67 @@ function drawLine(points) {
         }
         ctx.stroke();
 }
+// Testdaten definieren
+const nodes1 = [
+    { id: 1, x: 343, y: 1323, connections: [2, 31, 30], floor: "E1", name: "test", node_type: "Way"},
+    { id: 2, x: 590, y: 1326, connections: [1, 3], floor: "E1", name: "test", node_type: "Way"},
+    { id: 3, x: 581, y: 1269, connections: [2, 5, 29], floor: "E1", name: "test", node_type: "Way"},
+    { id: 24, x: 455, y: 1150, connections: [19], floor: "E1", name: "test", node_type: "Room"}
+    // Weitere Knoten hier hinzufügen
+];
+
+
+// Algorithmus mit Testdaten aufrufen
+const startId = 1; // Startknoten-ID
+const endId = 24;  // Endknoten-ID
+const path = aStar(startId, endId, nodes1);
+
+// Ergebnis in der Konsole ausgeben
+console.log("Gefundener Pfad:", path);
+
+
 
 // Global variable to store nodes
 var nodes = {};
+
+function getLastRoutes() {
+    fetch('/getLastRoute')
+        .then(response => response.json())
+        .then(routes => {
+            const previousRoutesContainer = document.getElementById('previousRoutes');
+            previousRoutesContainer.innerHTML = '';
+
+            routes.forEach(route => {
+                const { startId, endId, isBarrierFree, extrastops } = route;
+                const routeElement = document.createElement('button');
+                routeElement.textContent = `Von ${startId} nach ${endId}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
+                routeElement.style.display = 'block';
+                routeElement.onclick = () => loadRouteToForm(startId, endId, isBarrierFree, extrastops);
+
+                previousRoutesContainer.appendChild(routeElement);
+            });
+        })
+        .catch(error => console.error('Fehler beim Abrufen der letzten Routen:', error));
+}
+
+function loadRouteToForm(startId, endId, isBarrierFree, extrastops) {
+    const startNodeSelect = $('#startNode');
+    const endNodeSelect = $('#endNode');
+    const barrierFreeCheckbox = document.getElementById('barrierfree');
+    const extraStopsSelect = $('#extrastops');
+
+    if (startNodeSelect && endNodeSelect && barrierFreeCheckbox && extraStopsSelect) {
+        startNodeSelect.val(startId).trigger('change');
+        endNodeSelect.val(endId).trigger('change');
+        barrierFreeCheckbox.checked = isBarrierFree === 'Ja';
+
+        // Vorbelegen der Extrastops
+        const extraStopsArray = extrastops.split(', ');
+        extraStopsSelect.val(extraStopsArray).trigger('change');
+    } else {
+        console.error('Eines oder mehrere Elemente wurden im DOM nicht gefunden');
+    }
+}
 
 // Function to load nodes initially
 function loadNodes() {
@@ -100,47 +157,92 @@ function loadNodes() {
         .catch(error => console.error('Error loading nodes:', error));
 }
 
-// Call the loadNodes function on page load
+
 window.onload = function() {
     loadNodes();
+    getLastRoutes();
+    //displayPreviousRoutes(getPreviousRoutesFromCookies);
 };
 
-function saveRoute(startId, endId) {
-    $.post('/saveRoute', { startId, endId }, function(response) {
-        console.log(response.message);
+
+function saveRoute(startId, endId, isBarrierFree, extrastops) {
+    fetch('/saveRoute', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Sets the Content-Type to application/json
+        },
+        body: JSON.stringify({ startId, endId, isBarrierFree, extrastops }) // Converts the object to a JSON string
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // addRouteToPreviousRoutes
+        console.log("Route successfully saved:", body);
+    })
+    .catch(error => {
+        console.error("Error saving the route:", error);
     });
 }
-function addRouteToPreviousRoutes(startNode, endNode) {
-    var routeList = document.getElementById('previousRoutes');
-    var newRoute = document.createElement('li');
-    newRoute.textContent = 'Von ' + startNode + ' nach ' + endNode;
 
-    newRoute.addEventListener('click', function() {
-        $('#startNode').val(startNode).trigger('change');
-        $('#endNode').val(endNode).trigger('change');
-    });
-    saveRoute(startNode, endNode);
-    routeList.appendChild(newRoute);
-}
+    // fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}`)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('Calculated Path:', data.path);
+    //         // berechnet schonmal was aber nicht wirklich richtig, muss man sich anschauen
+    //         // drawRoute(data.path); // Zeichnet die Route
+    //         // drawLine(PUNKTE); braucht die punkte, die der algo durchgelaufen ist --> dann zeichnen der punkte
+    //         console.log("START: " + startOption)
+    //         console.log("START: " + endOption)
+    //         addRouteToPreviousRoutes(startOption, endOption);
 
+    //     })
+    //     .catch(error => console.error('Error fetching route:', error));
+
+
+    function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
+        var routeList = document.getElementById('previousRoutes');
+        var newRouteButton = document.createElement('button'); // Verwenden Sie 'button' anstatt 'li'
+        var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
+    
+        newRouteButton.textContent = `Von ${startNode} nach ${endNode}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
+        newRouteButton.style.display = 'block'; // Stellen Sie sicher, dass es in einer neuen Zeile angezeigt wird
+        newRouteButton.onclick = () => loadRouteToForm(startNode, endNode, isBarrierFree, extrastops); // Verwenden Sie die gleiche Funktion zum Laden der Route in das Formular
+    
+        saveRoute(startNode, endNode, isBarrierFree, extrastops); // Speichern der Route im Backend
+    
+        routeList.appendChild(newRouteButton); // Fügen Sie den Button zur Liste hinzu
+    }
+    
 
 // Funktion zum Berechnen der Route
 window.calculateRoute = function() {
     let startOption = document.getElementById('startNode').value; // B.1.1.3
     let endOption = document.getElementById('endNode').value;     // B.1.1.13
+    const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
+    .map(option => option.value).join(', ');
+    addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops);
+    // fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}`)     //das verkackt
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('Calculated Path:', data.path);
+    //         // berechnet schonmal was aber nicht wirklich richtig, muss man sich anschauen
+    //         // drawRoute(data.path); // Zeichnet die Route
+    //         // drawLine(PUNKTE); braucht die punkte, die der algo durchgelaufen ist --> dann zeichnen der punkte
+    //         // console.log("START: " + startOption)
+    //         // console.log("START: " + endOption)
+    //         // addRouteToPreviousRoutes(startOption, endOption);
 
-    fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log('Calculated Path:', data.path);
-            // berechnet schonmal was aber nicht wirklich richtig, muss man sich anschauen
-            // drawRoute(data.path); // Zeichnet die Route
-            // drawLine(PUNKTE); braucht die punkte, die der algo durchgelaufen ist --> dann zeichnen der punkte
-            addRouteToPreviousRoutes(startOption, endOption);
-
-        })
-        .catch(error => console.error('Error fetching route:', error));
+    //     })
+    //     .catch(error => console.error('Error fetching route:', error));
 };
+
+// Fügen Sie hier den A*-Algorithmus ein
+
+
 
 // function drawRoute(path) {
 //     if (!path || path.length === 0) return; // Check if path is valid
