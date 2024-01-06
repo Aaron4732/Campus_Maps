@@ -84,24 +84,6 @@ function drawLine(points) {
         }
         ctx.stroke();
 }
-// Testdaten definieren
-const nodes1 = [
-    { id: 1, x: 343, y: 1323, connections: [2, 31, 30], floor: "E1", name: "test", node_type: "Way"},
-    { id: 2, x: 590, y: 1326, connections: [1, 3], floor: "E1", name: "test", node_type: "Way"},
-    { id: 3, x: 581, y: 1269, connections: [2, 5, 29], floor: "E1", name: "test", node_type: "Way"},
-    { id: 24, x: 455, y: 1150, connections: [19], floor: "E1", name: "test", node_type: "Room"}
-    // Weitere Knoten hier hinzufügen
-];
-
-
-// Algorithmus mit Testdaten aufrufen
-const startId = 1; // Startknoten-ID
-const endId = 24;  // Endknoten-ID
-const path = aStar(startId, endId, nodes1);
-
-// Ergebnis in der Konsole ausgeben
-console.log("Gefundener Pfad:", path);
-
 
 
 // Global variable to store nodes
