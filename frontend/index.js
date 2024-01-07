@@ -170,42 +170,46 @@ function saveRoute(startId, endId, isBarrierFree, extrastops) {
 }
 
 
-    function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
-        var routeList = document.getElementById('previousRoutes');
-        var newRouteButton = document.createElement('button'); // Verwenden Sie 'button' anstatt 'li'
-        var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
-    
-        newRouteButton.textContent = `Von ${startNode} nach ${endNode}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
-        newRouteButton.style.display = 'block'; // Stellen Sie sicher, dass es in einer neuen Zeile angezeigt wird
-        newRouteButton.onclick = () => loadRouteToForm(startNode, endNode, isBarrierFree, extrastops); // Verwenden Sie die gleiche Funktion zum Laden der Route in das Formular
-    
-        saveRoute(startNode, endNode, isBarrierFree, extrastops); // Speichern der Route im Backend
-    
-        routeList.appendChild(newRouteButton); // Fügen Sie den Button zur Liste hinzu
-    }
+function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
+    var routeList = document.getElementById('previousRoutes');
+    var newRouteButton = document.createElement('button'); // Verwenden Sie 'button' anstatt 'li'
+    var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
+
+    newRouteButton.textContent = `Von ${startNode} nach ${endNode}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
+    newRouteButton.style.display = 'block'; // Stellen Sie sicher, dass es in einer neuen Zeile angezeigt wird
+    newRouteButton.onclick = () => loadRouteToForm(startNode, endNode, isBarrierFree, extrastops); // Verwenden Sie die gleiche Funktion zum Laden der Route in das Formular
+
+    saveRoute(startNode, endNode, isBarrierFree, extrastops); // Speichern der Route im Backend
+
+    routeList.appendChild(newRouteButton); // Fügen Sie den Button zur Liste hinzu
+}
     
 
 
 window.calculateRoute = function() {
-    let startOption = document.getElementById('startNode').value; // B.1.1.3
-    let endOption = document.getElementById('endNode').value;     // B.1.1.13
-    var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
-    const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
-    .map(option => option.value).join(', ');
-    addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops);
+let startOption = document.getElementById('startNode').value; // B.1.1.3
+let endOption = document.getElementById('endNode').value;     // B.1.1.13
+var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
+const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
+.map(option => option.value).join(', ');
+addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops);
 
-    fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}&isBarrierFree=${isBarrierFree}&extrastops=${selectedExtraStops}`) 
-        .then(response => response.json())
-        .then(data => {
-            console.log('Calculated Path:', data.path);
-            console.log("START: " + startOption)
-            console.log("START: " + endOption)
-            console.log("START: " + isBarrierFree)
-            console.log("START: " + selectedExtraStops)
-            //hier a star aufrufen und dann die route berechnen
+fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}&isBarrierFree=${isBarrierFree}&extrastops=${selectedExtraStops}`) 
+    .then(response => response.json())
+    .then(data => {
+        for (a in data)
+        {
+            console.log(a);
+        }
+        // console.log('Calculated Path:', data.path);
+        // console.log("START: " + startOption)
+        // console.log("START: " + endOption)
+        // console.log("START: " + isBarrierFree)
+        // console.log("START: " + selectedExtraStops)
+        //hier a star aufrufen und dann die route berechnen
 
-        })
-        .catch(error => console.error('Error fetching route:', error));
+    })
+    .catch(error => console.error('Error fetching route:', error));
 };
 
 }
