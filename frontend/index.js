@@ -143,7 +143,6 @@ function loadNodes() {
 window.onload = function() {
     loadNodes();
     getLastRoutes();
-    //displayPreviousRoutes(getPreviousRoutesFromCookies);
 };
 
 
@@ -170,20 +169,6 @@ function saveRoute(startId, endId, isBarrierFree, extrastops) {
     });
 }
 
-    // fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}`)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('Calculated Path:', data.path);
-    //         // berechnet schonmal was aber nicht wirklich richtig, muss man sich anschauen
-    //         // drawRoute(data.path); // Zeichnet die Route
-    //         // drawLine(PUNKTE); braucht die punkte, die der algo durchgelaufen ist --> dann zeichnen der punkte
-    //         console.log("START: " + startOption)
-    //         console.log("START: " + endOption)
-    //         addRouteToPreviousRoutes(startOption, endOption);
-
-    //     })
-    //     .catch(error => console.error('Error fetching route:', error));
-
 
     function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
         var routeList = document.getElementById('previousRoutes');
@@ -200,59 +185,28 @@ function saveRoute(startId, endId, isBarrierFree, extrastops) {
     }
     
 
-// Funktion zum Berechnen der Route
+
 window.calculateRoute = function() {
     let startOption = document.getElementById('startNode').value; // B.1.1.3
     let endOption = document.getElementById('endNode').value;     // B.1.1.13
+    var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
     const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
     .map(option => option.value).join(', ');
     addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops);
-    // fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}`)     //das verkackt
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('Calculated Path:', data.path);
-    //         // berechnet schonmal was aber nicht wirklich richtig, muss man sich anschauen
-    //         // drawRoute(data.path); // Zeichnet die Route
-    //         // drawLine(PUNKTE); braucht die punkte, die der algo durchgelaufen ist --> dann zeichnen der punkte
-    //         // console.log("START: " + startOption)
-    //         // console.log("START: " + endOption)
-    //         // addRouteToPreviousRoutes(startOption, endOption);
 
-    //     })
-    //     .catch(error => console.error('Error fetching route:', error));
+    fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}&isBarrierFree=${isBarrierFree}&extrastops=${selectedExtraStops}`) 
+        .then(response => response.json())
+        .then(data => {
+            console.log('Calculated Path:', data.path);
+            console.log("START: " + startOption)
+            console.log("START: " + endOption)
+            console.log("START: " + isBarrierFree)
+            console.log("START: " + selectedExtraStops)
+            //hier a star aufrufen und dann die route berechnen
+
+        })
+        .catch(error => console.error('Error fetching route:', error));
 };
-
-// Fügen Sie hier den A*-Algorithmus ein
-
-
-
-// function drawRoute(path) {
-//     if (!path || path.length === 0) return; // Check if path is valid
-
-//     var ctx = canvas.getContext('2d');
-
-//     ctx.beginPath();
-//     ctx.lineWidth = 2;
-//     ctx.strokeStyle = 'blue'; // Color of the route
-
-//     path.forEach((nodeId, index) => {
-//         const node = getNodeDetailsById(nodeId);
-//         if (index === 0) {
-//             ctx.moveTo(node.x, node.y);
-//         } else {
-//             ctx.lineTo(node.x, node.y);
-//         }
-//     });
-
-//     ctx.stroke(); // Zeichnen der Route
-//     draw();       // Dann das Bild neu zeichnen
-// }
-// function getNodeDetailsById(nodeId, nodes) {
-//     // Convert the nodeId from "B.1.1.x" format to numeric ID
-//     var numericId = parseInt(nodeId.split('.').pop());
-//     return nodes[numericId];
-// }
-
 
 }
 img.onload = draw;

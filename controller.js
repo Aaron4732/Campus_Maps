@@ -5,8 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const PORT = 3000;
 const MapNode = require('./mapnode');
-const { convertToNumericId, convertToFormattedId, aStar, loadNodes } = require('./routecalculator');
-const nodes = loadNodes();
+const routeCalculator = require('./routecalculator');
+// const nodes = loadNodes();
 
 app.use(express.static(path.join(__dirname, 'frontend')));
 
@@ -41,7 +41,7 @@ app.get('/initialize', (req, res) => {
             mapNodes[key] = new MapNode(jsonData[key]);
         }
 
-        res.json(mapNodes);
+        routeCalculator.setNodes(jsonData); // Nehmen wir an, du hast eine Funktion, die die Nodes setzt
       } catch (parseErr) {
           console.error('Error parsing JSON:', parseErr);
           res.status(500).send('Invalid JSON format');
@@ -50,17 +50,14 @@ app.get('/initialize', (req, res) => {
 });
 
 app.get('/calculateRoute', (req, res) => {
-  const startId = convertToNumericId(req.query.startId);  // Convert from "B.1.1" to a numeric ID
-  const endId = convertToNumericId(req.query.endId);
+  const startId = req.query.startId;  // Convert from "B.1.1" to a numeric ID
+  const endId = req.query.endId;
+  const isBarrierFree = req.query.isBarrierFree;
+  const extrastops = req.query.extrastops; 
   try {
-      console.log("Es kommt hier hin");
-      console.log(startId, endId)
-      //hier crash
-      const path = aStar(startId, endId, nodes); // Use numeric IDs for A* algorithm
-      const formattedPath = path.map(convertToFormattedId); // Convert back to formatted IDs for frontend
-      res.json({ path: formattedPath });
-      console.log("Es kommt hier hin 22")
-      
+      console.log(startId, endId, isBarrierFree, extrastops)
+      const path = routeCalculator.astar(startId, endId, isBarrierFree, extrastops); // Use numeric IDs for A* algorithm
+      res.json({path});
   } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.message });
