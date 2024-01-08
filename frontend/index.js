@@ -11,12 +11,12 @@ var dragStart = { x: 0, y: 0 };
 
 // Liste von Koordinaten für die Linie
 var linePoints = [
-    {x: 361, y: 1318},
-    {x: 580, y: 1318},
-    {x: 580, y: 1275},
-    {x: 400, y: 300},
-    {x: 500, y: 200},
-    {x: 700, y: 700},
+    // {x: 361, y: 1318},
+    // {x: 580, y: 1318},
+    // {x: 580, y: 1275},
+    // {x: 400, y: 300},
+    // {x: 500, y: 200},
+    // {x: 700, y: 700},
     // Weitere Koordinaten hier hinzufügen
 ];
 
@@ -146,7 +146,7 @@ window.onload = function() {
 };
 
 
-function saveRoute(startId, endId, isBarrierFree, extrastops) {
+function saveRoute(startId, endId, isBarrierFree, extrastops, routetoshow) {
     fetch('/saveRoute', {
         method: 'POST',
         headers: {
@@ -170,43 +170,52 @@ function saveRoute(startId, endId, isBarrierFree, extrastops) {
 }
 
 
-    function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
-        var routeList = document.getElementById('previousRoutes');
-        var newRouteButton = document.createElement('button'); // Verwenden Sie 'button' anstatt 'li'
-        var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
-    
-        newRouteButton.textContent = `Von ${startNode} nach ${endNode}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
-        newRouteButton.style.display = 'block'; // Stellen Sie sicher, dass es in einer neuen Zeile angezeigt wird
-        newRouteButton.onclick = () => loadRouteToForm(startNode, endNode, isBarrierFree, extrastops); // Verwenden Sie die gleiche Funktion zum Laden der Route in das Formular
-    
-        saveRoute(startNode, endNode, isBarrierFree, extrastops); // Speichern der Route im Backend
-    
-        routeList.appendChild(newRouteButton); // Fügen Sie den Button zur Liste hinzu
-    }
+function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
+    var routeList = document.getElementById('previousRoutes');
+    var newRouteButton = document.createElement('button'); // Verwenden Sie 'button' anstatt 'li'
+    var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
+
+    newRouteButton.textContent = `Von ${startNode} nach ${endNode}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
+    newRouteButton.style.display = 'block'; // Stellen Sie sicher, dass es in einer neuen Zeile angezeigt wird
+    newRouteButton.onclick = () => loadRouteToForm(startNode, endNode, isBarrierFree, extrastops); // Verwenden Sie die gleiche Funktion zum Laden der Route in das Formular
+
+    saveRoute(startNode, endNode, isBarrierFree, extrastops); // Speichern der Route im Backend
+
+    routeList.appendChild(newRouteButton); // Fügen Sie den Button zur Liste hinzu
+}
     
 
 
 window.calculateRoute = function() {
-    let startOption = document.getElementById('startNode').value; // B.1.1.3
-    let endOption = document.getElementById('endNode').value;     // B.1.1.13
+    let startOption = document.getElementById('startNode').value; 
+    let endOption = document.getElementById('endNode').value;
     var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
     const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
-    .map(option => option.value).join(', ');
+        .map(option => option.value).join(', ');
     addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops);
 
     fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}&isBarrierFree=${isBarrierFree}&extrastops=${selectedExtraStops}`) 
         .then(response => response.json())
         .then(data => {
-            console.log('Calculated Path:', data.path);
-            console.log("START: " + startOption)
-            console.log("START: " + endOption)
-            console.log("START: " + isBarrierFree)
-            console.log("START: " + selectedExtraStops)
-            //hier a star aufrufen und dann die route berechnen
+            console.log('Empfangene Route:', data);
 
-        })
+                data.path.forEach(node => {
+                    console.log('X:', node.x, 'Y:', node.y); //needs to be written in cookie
+                });
+                linePoints = data.path.map(node => {
+                    return { x: node.x, y: node.y };
+                });
+                console.log(linePoints)
+                draw();
+                //addtopreviousroute muss hieraufgefrufen werden - mit linepoints damit onclick auf previousroutes auch x, y lädt
+            } 
+        )
         .catch(error => console.error('Error fetching route:', error));
 };
+
+
+
+
 
 }
 img.onload = draw;
