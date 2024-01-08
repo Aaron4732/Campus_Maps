@@ -86,8 +86,101 @@ function drawLine(points) {
         }
         ctx.stroke();
     }
-
-    
 }
 
 img.onload = draw;
+
+function startButtonClick() {
+    document.getElementById('content-area').innerHTML = `
+        <button id="back-btn">Zurück</button>
+        <label for="start-point-instruction">Wählen Sie einen Startpunkt entweder durch Eingabe des nächsten Raumes, oder durch Auswählen eines Punktes auf der Karte.</label>
+        <label for="start-point">Startpunkt:</label>
+        <input type="text" id="start-point" name="start-point">
+        <div id="map-container">
+                <img id="map-image" src="maps/05 Stammhaus E1-Bestandsplan B-1.png" alt="Campus Map">
+        </div>
+        <button id="continue-btn">Weiter</button>
+    `;
+
+    document.getElementById('back-btn').addEventListener('click', function() {
+        resetContentArea();
+    });
+
+    document.getElementById('continue-btn').addEventListener('click', function() {
+        proceedToEndpoint();
+    });
+}
+
+function resetContentArea() {
+    document.getElementById('content-area').innerHTML = `
+        <p>Willkommen auf CampusMaps, das Navigationssystem für den Bauteil B der FH Campus Wien. Starten Sie gleich mit dem Auswählen Ihrer Route.</p>
+        <button id="confirm-btn">Start</button>
+    `;
+    document.getElementById('confirm-btn').addEventListener('click', startButtonClick);
+}
+
+function proceedToEndpoint() {
+    var startPoint = document.getElementById('start-point').value;
+    document.getElementById('content-area').innerHTML = `
+        <button id="back-btn">Zurück</button>
+        <p>Startpunkt: ${startPoint}</p>
+        <button id="add-stop-btn">+ Zwischenstopp</button>
+        <button id="remove-stop-btn">- Zwischenstopp</button>
+        <div id="stop-points"></div>
+        <label for="end-point">Endpunkt:</label>
+        <input type="text" id="end-point" name="end-point">
+        <label><input type="checkbox" id="accessible-route"> Barrierefreie Route wählen</label>
+    `;
+
+    document.getElementById('back-btn').addEventListener('click', function() {
+        startButtonClick(); // Go back to the start point selection
+    });
+
+    document.getElementById('add-stop-btn').addEventListener('click', function() {
+        addStopPoint();
+    });
+
+    document.getElementById('remove-stop-btn').addEventListener('click', function() {
+        removeStopPoint();
+    });
+}
+
+function addStopPoint() {
+    var stopPointsDiv = document.getElementById('stop-points');
+    var newStopPoint = document.createElement('div');
+    newStopPoint.className = "stop-point-div";
+    newStopPoint.innerHTML = `
+        <select class="stop-type">
+            <option value="-">-</option>
+            <option value="kaffeemaschine">Kaffeemaschine</option>
+            <option value="snackautomat">Snackautomat</option>
+            <option value="toilette">Toilette</option>
+            <option value="drucker">Drucker</option>
+        </select>
+        <input type="text" class="stop-point" style="display: inline;"> <!-- Changed from 'none' to 'inline' -->
+    `;
+    stopPointsDiv.appendChild(newStopPoint);
+
+    var selectElement = newStopPoint.querySelector('.stop-type');
+    selectElement.addEventListener('change', function() {
+        toggleStopPointTextField(this);
+    });
+}
+
+
+function removeStopPoint() {
+    var stopPointsDiv = document.getElementById('stop-points');
+    if (stopPointsDiv.children.length > 0) {
+        stopPointsDiv.removeChild(stopPointsDiv.lastChild);
+    }
+}
+
+function toggleStopPointTextField(selectElement) {
+    var textField = selectElement.nextElementSibling;
+    textField.style.display = selectElement.value === '-' ? 'inline' : 'none';
+}
+
+// Initial event listener attachment for the "Start" button
+document.getElementById('confirm-btn').addEventListener('click', startButtonClick);
+
+

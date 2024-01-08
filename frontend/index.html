@@ -2,18 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>FH Mamps</title>
-<link rel="stylesheet" href="index.css" />
-<script type="module" src="index.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FH Maps</title>
+    <link rel="stylesheet" href="index.css" />
+    <script type="module" src="index.js"></script>
+
 </head>
 <body>
+<header>
+    <div logo> <img src="images and fonts/CampusMaps_LOGO.png" alt="CampusMaps Logo"> </div>
+    <button id="info-button">I</button>
+</header>
+
+<div id="content-area">
+    <p>Willkommen auf CampusMaps, das Navigationssystem für den Bauteil B der FH Campus Wien. Starten Sie gleich mit dem Auswählen Ihrer Route. </p>
+    <button id="confirm-btn">Start</button>
+</div>
+
+<h2>Letzte Routen:</h2>
+<p>Keine letzten Routen vorhanden</p>
+
+
 <h1>testing aufruf</h1>
 <button onclick="getRoute()">Route</button>
 <button onclick="initialize()">Init</button>
 <button onclick="getJsonData()">JSON</button>
 <button onclick="createAndShowAllNodeIds()">testing ids in console</button>
-
 <canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;"></canvas>
+
 
 </body>
 </html>
