@@ -36,8 +36,7 @@ class queue {
         return cheapest_node_id;
     }
     add_node(parent_id, mapnode) { //mapnode ist id hier
-        this.nodes[this.next_node_id] = new nodes(this.next_node_id, this.nodes[parent_id], this.nodes[parent_id].cost, mapnode); //später
-        this.nodes[parent_id].add_child(this.next_node_id);
+        this.nodes[this.next_node_id] = new node(this.next_node_id, this.nodes[parent_id], this.nodes[parent_id].cost, mapnode); //später
         this.open_nodes[this.next_node_id] = this.nodes[this.next_node_id];
         this.next_node_id += 1;
     }
@@ -53,22 +52,30 @@ class queue {
     expand_node(node_id) {
         delete this.open_nodes[node_id];
         let parent_node = this.nodes[node_id];
-        for (let mapnode of parent_node.mapnode.get_connectednodes) { 
-            if (!parent_node.mapnode.compare_mapnodes(mapnode)) {
-                if (!this.check_if_node_exists(mapnode)) {
-                    this.add_node(node_id, mapnode);
+        for (let mapnode_id of parent_node.mapnode.get_connectednodes()) { 
+            if (!parent_node.mapnode.compare_mapnodes(mapnode_id)) {
+                if (!this.check_if_node_exists(mapnode_id)) {
+                    this.add_node(node_id, this.mapnodes_list[mapnode_id]);
                 }
             }
         }
     }
     get_path(node_id) {
         let path = [];
-        while (node_id !== null) {
+        let pathData = []; 
+        while (node_id > 0) {
             path.push(node_id);
-            node_id = this.nodes[node_id].parent;
+            let currentNode = this.nodes[node_id];
+            pathData.push({
+                x: currentNode.mapnode.x,
+                y: currentNode.mapnode.y,
+                type: currentNode.mapnode.node_type,
+                floor: currentNode.mapnode.floor
+            });
+            node_id = currentNode.parent_node.node_id;
         }
         this.number_of_moves = path.length - 1;
-        return path.reverse();
+        return pathData.reverse(); 
     }
   
     find_solution() {
@@ -79,6 +86,7 @@ class queue {
             if (cheapest_node_id === null) {
                 return null;
             }
+            
             if (this.nodes[cheapest_node_id].mapnode.id == this.end_map_node.id) {
                 this.path = this.get_path(cheapest_node_id);
                 return this.path;
@@ -92,12 +100,20 @@ class queue {
     {
         for (let a in this.mapnodes_list)
         {
-            if (a.name == name)
+        
+            if (this.mapnodes_list[a].name == name)
             {
-                return a
+                return this.mapnodes_list[a]
             }
+        
         }
     }
+
+    get_path_for_frontend()
+    {
+        
+    }
+
 
 }
 class node {
@@ -132,7 +148,3 @@ module.exports = {
     queue, 
     node,
   };
-
-
-
-

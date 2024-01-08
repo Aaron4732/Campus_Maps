@@ -74,7 +74,7 @@ app.get('/calculateRoute', (req, res) => {
   const isBarrierFree = req.query.isBarrierFree;
   const extrastops = req.query.extrastops; 
   try {
-      console.log(start_name, end_name, isBarrierFree, extrastops)
+      console.log("test: " + start_name, end_name, isBarrierFree, extrastops)
       let calc = new routeCalculator.queue(mapNodes, start_name, end_name);
       let path = calc.find_solution();
       res.json({path});
@@ -107,7 +107,7 @@ app.post('/saveRoute', (req, res) => {
 app.get('/getLastRoute', (req, res) => {
   try {
       const lastRoutes = req.cookies.lastRoute;
-      console.log(lastRoutes)
+      console.log("last route: " + lastRoutes)
       if (!lastRoutes) {
           return res.status(404).json({ message: 'Keine gespeicherten Routen gefunden' });
       }
