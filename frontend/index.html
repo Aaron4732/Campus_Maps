@@ -12,7 +12,13 @@
     
 </head>
 <body>
-    <h1>Landing page</h1>
+<header>
+    <div logo> <img src="images and fonts/CampusMaps_LOGO.png" alt="CampusMaps Logo"> </div>
+    <button id="info-button">I</button>
+</header>
+
+    <h1>Willkommen auf CampusMaps,</h1>
+<p>das Navigationssystem für den Bauteil B der FH Campus Wien. Starten Sie gleich mit dem Auswählen Ihrer Route. </p>
     <label for="startNode">Von:</label>
     <select id="startNode">
     <div id="startNodeOptions" class="dropdown-container">
@@ -126,6 +132,7 @@
         <option value="B.3.34">B.3.34</option>
         <option value="B.3.35">B.3.35</option>
         <option value="B.3.36">B.3.37</option>
+    </div>
     </select>
     <label for="endNode">Nach:</label>
     <select id="endNode">
@@ -240,6 +247,7 @@
         <option value="B.3.34">B.3.34</option>
         <option value="B.3.35">B.3.35</option>
         <option value="B.3.36">B.3.37</option>
+    </div>
     </select>
     <label for="extrastops">Extra Stops:</label>
     <select id="extrastops" multiple>
@@ -249,12 +257,13 @@
         <option value="Automat">Automat</option>
         <option value="Kaffee">Kaffee</option>
         <option value="WC">WC</option>
+    </div>
     </select>
     <input type="checkbox" id="barrierfree">
     <label for="barrierfree"> barrierefrei</label>
     <button onclick="calculateRoute()">Calculate Route</button>
     <div id="previousRoutesContainer">
-         <label for="previousRoutes">Vorherige Routen</label>
+         <label for="previousRoutes">Vorherige Routen:</label>
          <ul id="previousRoutes"></ul>
     </div>
     <canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;"></canvas>
