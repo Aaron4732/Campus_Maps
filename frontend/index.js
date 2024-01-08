@@ -213,9 +213,5 @@ window.calculateRoute = function() {
         .catch(error => console.error('Error fetching route:', error));
 };
 
-
-
-
-
 }
 img.onload = draw;
