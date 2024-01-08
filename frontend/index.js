@@ -4,7 +4,6 @@ var ctx = canvas.getContext('2d');
 var img = new Image();
 img.src = 'maps\\05 Stammhaus E1-Bestandsplan B-1.png'; // Setzen Sie die URL Ihres Bildes hier ein
 
-
 var imgPosition = { x: 0, y: 0 };
 var scale = 1;
 var dragging = false;
@@ -12,12 +11,12 @@ var dragStart = { x: 0, y: 0 };
 
 // Liste von Koordinaten für die Linie
 var linePoints = [
-    {x: 361, y: 1318},
-    {x: 580, y: 1318},
-    {x: 580, y: 1275},
-    {x: 400, y: 300},
-    {x: 500, y: 200},
-    {x: 700, y: 700},
+    // {x: 361, y: 1318},
+    // {x: 580, y: 1318},
+    // {x: 580, y: 1275},
+    // {x: 400, y: 300},
+    // {x: 500, y: 200},
+    // {x: 700, y: 700},
     // Weitere Koordinaten hier hinzufügen
 ];
 
@@ -38,7 +37,7 @@ canvas.addEventListener('mousemove', function(event) {
         draw();
     }
 
-    console.log(imgPosition, "Mouse:", event.offsetX + imgPosition.x * -1, event.offsetY + imgPosition.y * -1)
+    //console.log(imgPosition, "Mouse:", event.offsetX + imgPosition.x * -1, event.offsetY + imgPosition.y * -1)
 });
 
 canvas.addEventListener('wheel', function(event) {
@@ -73,7 +72,6 @@ function draw() {
     ctx.strokeStyle = 'red'; // Farbe der Linie
     ctx.lineWidth = 2; // Dicke der Linie
     drawLine(linePoints);
-
     ctx.restore();
 }
 
@@ -85,102 +83,139 @@ function drawLine(points) {
             ctx.lineTo(points[i].x, points[i].y);
         }
         ctx.stroke();
+}
+
+
+// Global variable to store nodes
+var nodes = {};
+
+function getLastRoutes() {
+    fetch('/getLastRoute')
+        .then(response => response.json())
+        .then(routes => {
+            const previousRoutesContainer = document.getElementById('previousRoutes');
+            previousRoutesContainer.innerHTML = '';
+
+            routes.forEach(route => {
+                const { startId, endId, isBarrierFree, extrastops } = route;
+                const routeElement = document.createElement('button');
+                routeElement.textContent = `Von ${startId} nach ${endId}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
+                routeElement.style.display = 'block';
+                routeElement.onclick = () => loadRouteToForm(startId, endId, isBarrierFree, extrastops);
+
+                previousRoutesContainer.appendChild(routeElement);
+            });
+        })
+        .catch(error => console.error('Fehler beim Abrufen der letzten Routen:', error));
+}
+
+function loadRouteToForm(startId, endId, isBarrierFree, extrastops) {
+    const startNodeSelect = $('#startNode');
+    const endNodeSelect = $('#endNode');
+    const barrierFreeCheckbox = document.getElementById('barrierfree');
+    const extraStopsSelect = $('#extrastops');
+
+    if (startNodeSelect && endNodeSelect && barrierFreeCheckbox && extraStopsSelect) {
+        startNodeSelect.val(startId).trigger('change');
+        endNodeSelect.val(endId).trigger('change');
+        barrierFreeCheckbox.checked = isBarrierFree === 'Ja';
+
+        // Vorbelegen der Extrastops
+        const extraStopsArray = extrastops.split(', ');
+        extraStopsSelect.val(extraStopsArray).trigger('change');
+    } else {
+        console.error('Eines oder mehrere Elemente wurden im DOM nicht gefunden');
     }
 }
 
+// Function to load nodes initially
+function loadNodes() {
+    fetch('/initialize')
+        .then(response => response.json())
+        .then(data => {
+            nodes = data; // Store the nodes globally
+            console.log("Nodes loaded:", nodes);
+        })
+        .catch(error => console.error('Error loading nodes:', error));
+}
+
+
+window.onload = function() {
+    loadNodes();
+    getLastRoutes();
+};
+
+
+function saveRoute(startId, endId, isBarrierFree, extrastops, routetoshow) {
+    fetch('/saveRoute', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Sets the Content-Type to application/json
+        },
+        body: JSON.stringify({ startId, endId, isBarrierFree, extrastops }) // Converts the object to a JSON string
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // addRouteToPreviousRoutes
+        console.log("Route successfully saved:", body);
+    })
+    .catch(error => {
+        console.error("Error saving the route:", error);
+    });
+}
+
+
+function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
+    var routeList = document.getElementById('previousRoutes');
+    var newRouteButton = document.createElement('button'); // Verwenden Sie 'button' anstatt 'li'
+    var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
+
+    newRouteButton.textContent = `Von ${startNode} nach ${endNode}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
+    newRouteButton.style.display = 'block'; // Stellen Sie sicher, dass es in einer neuen Zeile angezeigt wird
+    newRouteButton.onclick = () => loadRouteToForm(startNode, endNode, isBarrierFree, extrastops); // Verwenden Sie die gleiche Funktion zum Laden der Route in das Formular
+
+    saveRoute(startNode, endNode, isBarrierFree, extrastops); // Speichern der Route im Backend
+
+    routeList.appendChild(newRouteButton); // Fügen Sie den Button zur Liste hinzu
+}
+    
+
+
+window.calculateRoute = function() {
+    let startOption = document.getElementById('startNode').value; 
+    let endOption = document.getElementById('endNode').value;
+    var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
+    const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
+        .map(option => option.value).join(', ');
+    addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops);
+
+    fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}&isBarrierFree=${isBarrierFree}&extrastops=${selectedExtraStops}`) 
+        .then(response => response.json())
+        .then(data => {
+            console.log('Empfangene Route:', data);
+
+                data.path.forEach(node => {
+                    console.log('X:', node.x, 'Y:', node.y); //needs to be written in cookie
+                });
+                linePoints = data.path.map(node => {
+                    return { x: node.x, y: node.y };
+                });
+                console.log(linePoints)
+                draw();
+                //addtopreviousroute muss hieraufgefrufen werden - mit linepoints damit onclick auf previousroutes auch x, y lädt
+            } 
+        )
+        .catch(error => console.error('Error fetching route:', error));
+};
+
+
+
+
+
+}
 img.onload = draw;
-
-function startButtonClick() {
-    document.getElementById('content-area').innerHTML = `
-        <button id="back-btn">Zurück</button>
-        <label for="start-point-instruction">Wählen Sie einen Startpunkt entweder durch Eingabe des nächsten Raumes, oder durch Auswählen eines Punktes auf der Karte.</label>
-        <label for="start-point">Startpunkt:</label>
-        <input type="text" id="start-point" name="start-point">
-        <div id="map-container">
-                <img id="map-image" src="maps/05 Stammhaus E1-Bestandsplan B-1.png" alt="Campus Map">
-        </div>
-        <button id="continue-btn">Weiter</button>
-    `;
-
-    document.getElementById('back-btn').addEventListener('click', function() {
-        resetContentArea();
-    });
-
-    document.getElementById('continue-btn').addEventListener('click', function() {
-        proceedToEndpoint();
-    });
-}
-
-function resetContentArea() {
-    document.getElementById('content-area').innerHTML = `
-        <p>Willkommen auf CampusMaps, das Navigationssystem für den Bauteil B der FH Campus Wien. Starten Sie gleich mit dem Auswählen Ihrer Route.</p>
-        <button id="confirm-btn">Start</button>
-    `;
-    document.getElementById('confirm-btn').addEventListener('click', startButtonClick);
-}
-
-function proceedToEndpoint() {
-    var startPoint = document.getElementById('start-point').value;
-    document.getElementById('content-area').innerHTML = `
-        <button id="back-btn">Zurück</button>
-        <p>Startpunkt: ${startPoint}</p>
-        <button id="add-stop-btn">+ Zwischenstopp</button>
-        <button id="remove-stop-btn">- Zwischenstopp</button>
-        <div id="stop-points"></div>
-        <label for="end-point">Endpunkt:</label>
-        <input type="text" id="end-point" name="end-point">
-        <label><input type="checkbox" id="accessible-route"> Barrierefreie Route wählen</label>
-    `;
-
-    document.getElementById('back-btn').addEventListener('click', function() {
-        startButtonClick(); // Go back to the start point selection
-    });
-
-    document.getElementById('add-stop-btn').addEventListener('click', function() {
-        addStopPoint();
-    });
-
-    document.getElementById('remove-stop-btn').addEventListener('click', function() {
-        removeStopPoint();
-    });
-}
-
-function addStopPoint() {
-    var stopPointsDiv = document.getElementById('stop-points');
-    var newStopPoint = document.createElement('div');
-    newStopPoint.className = "stop-point-div";
-    newStopPoint.innerHTML = `
-        <select class="stop-type">
-            <option value="-">-</option>
-            <option value="kaffeemaschine">Kaffeemaschine</option>
-            <option value="snackautomat">Snackautomat</option>
-            <option value="toilette">Toilette</option>
-            <option value="drucker">Drucker</option>
-        </select>
-        <input type="text" class="stop-point" style="display: inline;"> <!-- Changed from 'none' to 'inline' -->
-    `;
-    stopPointsDiv.appendChild(newStopPoint);
-
-    var selectElement = newStopPoint.querySelector('.stop-type');
-    selectElement.addEventListener('change', function() {
-        toggleStopPointTextField(this);
-    });
-}
-
-
-function removeStopPoint() {
-    var stopPointsDiv = document.getElementById('stop-points');
-    if (stopPointsDiv.children.length > 0) {
-        stopPointsDiv.removeChild(stopPointsDiv.lastChild);
-    }
-}
-
-function toggleStopPointTextField(selectElement) {
-    var textField = selectElement.nextElementSibling;
-    textField.style.display = selectElement.value === '-' ? 'inline' : 'none';
-}
-
-// Initial event listener attachment for the "Start" button
-document.getElementById('confirm-btn').addEventListener('click', startButtonClick);
-
-

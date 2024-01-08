@@ -1,62 +1,28 @@
-body {
-    background-color: #e0e6f0;
-    margin: 0;
-    font-family: Arial, sans-serif;
+.select2-container {
+    width: 10% !important; 
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Stil für den Container der aktuellen Route */
+#currentRoute {
+    margin-top: 20px;
+    /* Weitere Stiloptionen nach Bedarf */
 }
 
-img {
-  max-width: 20%;
-  height: auto;
+/* Stil für den Container der vorherigen Routen */
+#previousRoutesContainer {
+    margin-top: 20px;
+    /* Weitere Stiloptionen nach Bedarf */
 }
 
-#info-button {
-    background: none;
-    border: none;
+/* Stil für die Liste der vorherigen Routen */
+#previousRoutes {
+    list-style-type: none; /* Entfernt Bullet Points */
+    padding: 0;
+}
+
+#previousRoutes li {
     cursor: pointer;
-    font-size: 16px;
-}
-
-main {
-    padding: 20px;
-    text-align: center;
-}
-
-#content-area {
-    border: 1px solid #ccc;
-    margin: 20px 0;
-    padding: 20px;
-}
-
-#map-container {
-    width: 100%;
-    overflow: hidden; /* allows scrolling */
-    position: relative;
-    cursor: move; /* change cursor to indicate the image can be dragged */
-}
-
-#map-image {
-    width: 100%; /* Adjust this to set the initial zoom level */
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-/* Responsive design */
-@media (max-width: 600px) {
-    header {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #info-button {
-        margin-top: 10px;
-    }
+    color: blue;
+    text-decoration: underline;
+    margin-bottom: 5px;
 }

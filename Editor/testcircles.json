@@ -1,0 +1,1541 @@
+{
+    "35": {
+        "x": 1991,
+        "y": 1368,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [37],
+        "name": "test",
+        "id": 35
+    },
+    "37": {
+        "x": 1900,
+        "y": 1271,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [35, 38, 44],
+        "name": "test",
+        "id": 37
+    },
+    "38": {
+        "x": 1894,
+        "y": 1163,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [37],
+        "name": "test",
+        "id": 38
+    },
+    "40": {
+        "x": 1831,
+        "y": 1369,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [44],
+        "name": "test",
+        "id": 40
+    },
+    "44": {
+        "x": 1783,
+        "y": 1269,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [37, 40, 45, 48],
+        "name": "test",
+        "id": 44
+    },
+    "45": {
+        "x": 1752,
+        "y": 1161,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [44],
+        "name": "test",
+        "id": 45
+    },
+    "46": {
+        "x": 1685,
+        "y": 1372,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [48],
+        "name": "test",
+        "id": 46
+    },
+    "48": {
+        "x": 1678,
+        "y": 1273,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [44, 46, 49, 50],
+        "name": "test",
+        "id": 48
+    },
+    "49": {
+        "x": 1604,
+        "y": 1163,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [48],
+        "name": "test",
+        "id": 49
+    },
+    "50": {
+        "x": 1459,
+        "y": 1273,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [48, 51, 52, 53],
+        "name": "test",
+        "id": 50
+    },
+    "51": {
+        "x": 1508,
+        "y": 1373,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [50],
+        "name": "test",
+        "id": 51
+    },
+    "52": {
+        "x": 1417,
+        "y": 1160,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [50],
+        "name": "test",
+        "id": 52
+    },
+    "53": {
+        "x": 1321,
+        "y": 1274,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [50, 55, 54, 56],
+        "name": "test",
+        "id": 53
+    },
+    "54": {
+        "x": 1290,
+        "y": 1170,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [53],
+        "name": "test",
+        "id": 54
+    },
+    "55": {
+        "x": 1304,
+        "y": 1375,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [53],
+        "name": "test",
+        "id": 55
+    },
+    "56": {
+        "x": 1174,
+        "y": 1273,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [53, 62, 126, 60],
+        "name": "test",
+        "id": 56
+    },
+    "60": {
+        "x": 931,
+        "y": 1274,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [56, 62, 85, 89, 63, 60, 60],
+        "name": "test",
+        "id": 60
+    },
+    "62": {
+        "x": 1054,
+        "y": 1372,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [56, 60],
+        "name": "test",
+        "id": 62
+    },
+    "63": {
+        "x": 819,
+        "y": 1331,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [60],
+        "name": "test",
+        "id": 63
+    },
+    "64": {
+        "x": 1141,
+        "y": 1108,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [126],
+        "name": "test",
+        "id": 64
+    },
+    "65": {
+        "x": 1089,
+        "y": 1128,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [126],
+        "name": "test",
+        "id": 65
+    },
+    "77": {
+        "x": 1212,
+        "y": 1216,
+        "node_type": "Elevator",
+        "floor": "E1",
+        "connections": [126],
+        "name": "test",
+        "id": 77
+    },
+    "84": {
+        "x": 1210,
+        "y": 1170,
+        "node_type": "Elevator",
+        "floor": "E1",
+        "connections": [126],
+        "name": "test",
+        "id": 84
+    },
+    "85": {
+        "x": 938,
+        "y": 1155,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [60],
+        "name": "test",
+        "id": 85
+    },
+    "89": {
+        "x": 841,
+        "y": 1271,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [60, 91],
+        "name": "test",
+        "id": 89
+    },
+    "91": {
+        "x": 757,
+        "y": 1277,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [89, 92, 94],
+        "name": "test",
+        "id": 91
+    },
+    "92": {
+        "x": 767,
+        "y": 1208,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [91, 97],
+        "name": "test",
+        "id": 92
+    },
+    "94": {
+        "x": 717,
+        "y": 1276,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [91, 95, 98, 100],
+        "name": "test",
+        "id": 94
+    },
+    "95": {
+        "x": 728,
+        "y": 1366,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [94],
+        "name": "test",
+        "id": 95
+    },
+    "96": {
+        "x": 831,
+        "y": 1409,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [],
+        "name": "test",
+        "id": 96
+    },
+    "97": {
+        "x": 770,
+        "y": 1130,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [92],
+        "name": "test",
+        "id": 97
+    },
+    "98": {
+        "x": 721,
+        "y": 1241,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [94],
+        "name": "test",
+        "id": 98
+    },
+    "100": {
+        "x": 671,
+        "y": 1274,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [94, 101, 102],
+        "name": "test",
+        "id": 100
+    },
+    "101": {
+        "x": 655,
+        "y": 1372,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [100],
+        "name": "test",
+        "id": 101
+    },
+    "102": {
+        "x": 615,
+        "y": 1257,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [100, 105, 113, 106],
+        "name": "test",
+        "id": 102
+    },
+    "105": {
+        "x": 694,
+        "y": 1166,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [102],
+        "name": "test",
+        "id": 105
+    },
+    "106": {
+        "x": 516,
+        "y": 1200,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [102, 109],
+        "name": "test",
+        "id": 106
+    },
+    "109": {
+        "x": 512,
+        "y": 1262,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [106],
+        "name": "test",
+        "id": 109
+    },
+    "113": {
+        "x": 600,
+        "y": 1319,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [102, 117, 119],
+        "name": "test",
+        "id": 113
+    },
+    "117": {
+        "x": 603,
+        "y": 1388,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [113],
+        "name": "test",
+        "id": 117
+    },
+    "119": {
+        "x": 436,
+        "y": 1319,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [113, 120, 122],
+        "name": "test",
+        "id": 119
+    },
+    "120": {
+        "x": 419,
+        "y": 1397,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [119],
+        "name": "test",
+        "id": 120
+    },
+    "122": {
+        "x": 336,
+        "y": 1322,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [119, 125, 124],
+        "name": "test",
+        "id": 122
+    },
+    "124": {
+        "x": 302,
+        "y": 1256,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [122],
+        "name": "test",
+        "id": 124
+    },
+    "125": {
+        "x": 252,
+        "y": 1373,
+        "node_type": "Room",
+        "floor": "E1",
+        "connections": [122],
+        "name": "test",
+        "id": 125
+    },
+    "126": {
+        "x": 1151,
+        "y": 1199,
+        "node_type": "Way",
+        "floor": "E1",
+        "connections": [56, 77, 84, 64, 65],
+        "name": "test",
+        "id": 126
+    },
+    "127": {
+        "x": 2334,
+        "y": 1330,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [131, 225, 227],
+        "name": "test",
+        "id": 127
+    },
+    "131": {
+        "x": 2294,
+        "y": 1205,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [127, 132, 135],
+        "name": "test",
+        "id": 131
+    },
+    "132": {
+        "x": 2310,
+        "y": 1077,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [131, 133],
+        "name": "test",
+        "id": 132
+    },
+    "133": {
+        "x": 2203,
+        "y": 1100,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [135, 132, 141],
+        "name": "test",
+        "id": 133
+    },
+    "134": {
+        "x": 2217,
+        "y": 1328,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [135],
+        "name": "test",
+        "id": 134
+    },
+    "135": {
+        "x": 2226,
+        "y": 1206,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [131, 134, 133, 136],
+        "name": "test",
+        "id": 135
+    },
+    "136": {
+        "x": 2119,
+        "y": 1206,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [135, 138, 142, 141],
+        "name": "test",
+        "id": 136
+    },
+    "138": {
+        "x": 2095,
+        "y": 1320,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [136],
+        "name": "test",
+        "id": 138
+    },
+    "141": {
+        "x": 2092,
+        "y": 1087,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [133, 142, 136],
+        "name": "test",
+        "id": 141
+    },
+    "142": {
+        "x": 2014,
+        "y": 1213,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [136, 141, 144, 146],
+        "name": "test",
+        "id": 142
+    },
+    "144": {
+        "x": 1982,
+        "y": 1318,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [142],
+        "name": "test",
+        "id": 144
+    },
+    "145": {
+        "x": 1991,
+        "y": 1044,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [146],
+        "name": "test",
+        "id": 145
+    },
+    "146": {
+        "x": 1894,
+        "y": 1218,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [142, 145, 153, 155],
+        "name": "test",
+        "id": 146
+    },
+    "148": {
+        "x": 1811,
+        "y": 1058,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [153],
+        "name": "test",
+        "id": 148
+    },
+    "149": {
+        "x": 1759,
+        "y": 1392,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [153],
+        "name": "test",
+        "id": 149
+    },
+    "150": {
+        "x": 1752,
+        "y": 1328,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [153, 238, 236, 235],
+        "name": "test",
+        "id": 150
+    },
+    "151": {
+        "x": 1757,
+        "y": 1271,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [153],
+        "name": "test",
+        "id": 151
+    },
+    "153": {
+        "x": 1883,
+        "y": 1324,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [146, 149, 150, 151, 148],
+        "name": "test",
+        "id": 153
+    },
+    "154": {
+        "x": 1580,
+        "y": 1341,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [155],
+        "name": "test",
+        "id": 154
+    },
+    "155": {
+        "x": 1669,
+        "y": 1214,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [146, 154, 156, 159],
+        "name": "test",
+        "id": 155
+    },
+    "156": {
+        "x": 1583,
+        "y": 1059,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [155],
+        "name": "test",
+        "id": 156
+    },
+    "159": {
+        "x": 1372,
+        "y": 1204,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [155, 160, 176, 261],
+        "name": "test",
+        "id": 159
+    },
+    "160": {
+        "x": 1409,
+        "y": 1332,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [159, 246],
+        "name": "test",
+        "id": 160
+    },
+    "168": {
+        "x": 1443,
+        "y": 1147,
+        "node_type": "Elevator",
+        "floor": "E2",
+        "connections": [261],
+        "name": "test",
+        "id": 168
+    },
+    "173": {
+        "x": 1348,
+        "y": 988,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [174, 261],
+        "name": "test",
+        "id": 173
+    },
+    "174": {
+        "x": 1285,
+        "y": 1027,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [173, 248],
+        "name": "test",
+        "id": 174
+    },
+    "176": {
+        "x": 1266,
+        "y": 1201,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [159, 177, 178, 179],
+        "name": "test",
+        "id": 176
+    },
+    "177": {
+        "x": 1296,
+        "y": 1348,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [176],
+        "name": "test",
+        "id": 177
+    },
+    "178": {
+        "x": 1185,
+        "y": 1356,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [176],
+        "name": "test",
+        "id": 178
+    },
+    "179": {
+        "x": 1059,
+        "y": 1203,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [176, 187, 190, 182],
+        "name": "test",
+        "id": 179
+    },
+    "182": {
+        "x": 949,
+        "y": 1203,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [179, 192, 191, 193],
+        "name": "test",
+        "id": 182
+    },
+    "187": {
+        "x": 1094,
+        "y": 1084,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [179],
+        "name": "test",
+        "id": 187
+    },
+    "190": {
+        "x": 1058,
+        "y": 1341,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [179],
+        "name": "test",
+        "id": 190
+    },
+    "191": {
+        "x": 945,
+        "y": 1344,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [182, 268],
+        "name": "test",
+        "id": 191
+    },
+    "192": {
+        "x": 987,
+        "y": 1083,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [182, 268],
+        "name": "test",
+        "id": 192
+    },
+    "193": {
+        "x": 870,
+        "y": 1205,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [182, 198, 196, 268, 275, 194, 193, 193],
+        "name": "test",
+        "id": 193
+    },
+    "194": {
+        "x": 884,
+        "y": 1135,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [193, 272, 195, 194, 194, 274],
+        "name": "test",
+        "id": 194
+    },
+    "195": {
+        "x": 889,
+        "y": 1038,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [194],
+        "name": "test",
+        "id": 195
+    },
+    "196": {
+        "x": 801,
+        "y": 1203,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [193, 197, 198, 199, 200],
+        "name": "test",
+        "id": 196
+    },
+    "197": {
+        "x": 820,
+        "y": 1167,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [196],
+        "name": "test",
+        "id": 197
+    },
+    "198": {
+        "x": 832,
+        "y": 1342,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [193, 196],
+        "name": "test",
+        "id": 198
+    },
+    "199": {
+        "x": 719,
+        "y": 1324,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [196],
+        "name": "test",
+        "id": 199
+    },
+    "200": {
+        "x": 658,
+        "y": 1195,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [196, 201, 205],
+        "name": "test",
+        "id": 200
+    },
+    "201": {
+        "x": 662,
+        "y": 1073,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [200, 202, 203, 204],
+        "name": "test",
+        "id": 201
+    },
+    "202": {
+        "x": 798,
+        "y": 1018,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [201],
+        "name": "test",
+        "id": 202
+    },
+    "203": {
+        "x": 799,
+        "y": 1088,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [201],
+        "name": "test",
+        "id": 203
+    },
+    "204": {
+        "x": 789,
+        "y": 1142,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [201, 279],
+        "name": "test",
+        "id": 204
+    },
+    "205": {
+        "x": 563,
+        "y": 1200,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [200, 212, 213, 214, 279, 205, 205, 283, 285, 284],
+        "name": "test",
+        "id": 205
+    },
+    "212": {
+        "x": 603,
+        "y": 1343,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [205],
+        "name": "test",
+        "id": 212
+    },
+    "213": {
+        "x": 558,
+        "y": 1075,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [205],
+        "name": "test",
+        "id": 213
+    },
+    "214": {
+        "x": 490,
+        "y": 1197,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [205, 217, 215, 216, 287, 214, 214],
+        "name": "test",
+        "id": 214
+    },
+    "215": {
+        "x": 489,
+        "y": 1346,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [214],
+        "name": "test",
+        "id": 215
+    },
+    "216": {
+        "x": 451,
+        "y": 1071,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [217, 214, 284],
+        "name": "test",
+        "id": 216
+    },
+    "217": {
+        "x": 417,
+        "y": 1194,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [214, 216, 218, 219, 221, 220],
+        "name": "test",
+        "id": 217
+    },
+    "218": {
+        "x": 396,
+        "y": 1351,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [217],
+        "name": "test",
+        "id": 218
+    },
+    "219": {
+        "x": 306,
+        "y": 1201,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [217, 289],
+        "name": "test",
+        "id": 219
+    },
+    "220": {
+        "x": 332,
+        "y": 1073,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [217],
+        "name": "test",
+        "id": 220
+    },
+    "221": {
+        "x": 265,
+        "y": 1345,
+        "node_type": "Room",
+        "floor": "E2",
+        "connections": [217],
+        "name": "test",
+        "id": 221
+    },
+    "222": {
+        "x": 2335,
+        "y": 1210,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [222, 222, 223, 225],
+        "name": "test",
+        "id": 222
+    },
+    "223": {
+        "x": 2329,
+        "y": 1069,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [222, 226],
+        "name": "test",
+        "id": 223
+    },
+    "224": {
+        "x": 2335,
+        "y": 1340,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [],
+        "name": "test",
+        "id": 224
+    },
+    "225": {
+        "x": 2250,
+        "y": 1208,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [222, 127, 227, 226, 228],
+        "name": "test",
+        "id": 225
+    },
+    "226": {
+        "x": 2220,
+        "y": 1066,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [225, 223],
+        "name": "test",
+        "id": 226
+    },
+    "227": {
+        "x": 2180,
+        "y": 1330,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [225, 127, 232],
+        "name": "test",
+        "id": 227
+    },
+    "228": {
+        "x": 2138,
+        "y": 1208,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [225, 230, 229],
+        "name": "test",
+        "id": 228
+    },
+    "229": {
+        "x": 2109,
+        "y": 1065,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [228],
+        "name": "test",
+        "id": 229
+    },
+    "230": {
+        "x": 2025,
+        "y": 1208,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [228, 233],
+        "name": "test",
+        "id": 230
+    },
+    "231": {
+        "x": 1995,
+        "y": 1067,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [233],
+        "name": "test",
+        "id": 231
+    },
+    "232": {
+        "x": 2010,
+        "y": 1328,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [233, 227],
+        "name": "test",
+        "id": 232
+    },
+    "233": {
+        "x": 1933,
+        "y": 1210,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [230, 232, 231, 235, 234],
+        "name": "test",
+        "id": 233
+    },
+    "234": {
+        "x": 1868,
+        "y": 1075,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [233],
+        "name": "test",
+        "id": 234
+    },
+    "235": {
+        "x": 1831,
+        "y": 1210,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [233, 238, 237, 236, 150],
+        "name": "test",
+        "id": 235
+    },
+    "236": {
+        "x": 1872,
+        "y": 1344,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [150, 235],
+        "name": "test",
+        "id": 236
+    },
+    "237": {
+        "x": 1759,
+        "y": 1093,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [235, 241],
+        "name": "test",
+        "id": 237
+    },
+    "238": {
+        "x": 1717,
+        "y": 1203,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [235, 150, 240],
+        "name": "test",
+        "id": 238
+    },
+    "239": {
+        "x": 1747,
+        "y": 1328,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [],
+        "name": "test",
+        "id": 239
+    },
+    "240": {
+        "x": 1651,
+        "y": 1204,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [238, 240, 240, 241, 242, 243],
+        "name": "test",
+        "id": 240
+    },
+    "241": {
+        "x": 1645,
+        "y": 1071,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [240, 237],
+        "name": "test",
+        "id": 241
+    },
+    "242": {
+        "x": 1637,
+        "y": 1334,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [240],
+        "name": "test",
+        "id": 242
+    },
+    "243": {
+        "x": 1565,
+        "y": 1208,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [240, 245, 244, 246],
+        "name": "test",
+        "id": 243
+    },
+    "244": {
+        "x": 1538,
+        "y": 1089,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [243],
+        "name": "test",
+        "id": 244
+    },
+    "245": {
+        "x": 1528,
+        "y": 1337,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [243],
+        "name": "test",
+        "id": 245
+    },
+    "246": {
+        "x": 1418,
+        "y": 1209,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [243, 160, 264, 248],
+        "name": "test",
+        "id": 246
+    },
+    "247": {
+        "x": 1405,
+        "y": 1339,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [],
+        "name": "test",
+        "id": 247
+    },
+    "248": {
+        "x": 1360,
+        "y": 1122,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [246, 253, 256, 258, 174, 294],
+        "name": "test",
+        "id": 248
+    },
+    "253": {
+        "x": 1435,
+        "y": 1143,
+        "node_type": "Elevator",
+        "floor": "E3",
+        "connections": [248],
+        "name": "test",
+        "id": 253
+    },
+    "256": {
+        "x": 1434,
+        "y": 1089,
+        "node_type": "Elevator",
+        "floor": "E3",
+        "connections": [248],
+        "name": "test",
+        "id": 256
+    },
+    "258": {
+        "x": 1344,
+        "y": 998,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [248],
+        "name": "test",
+        "id": 258
+    },
+    "259": {
+        "x": 1282,
+        "y": 1025,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [],
+        "name": "test",
+        "id": 259
+    },
+    "261": {
+        "x": 1363,
+        "y": 1110,
+        "node_type": "Way",
+        "floor": "E2",
+        "connections": [262, 173, 168, 159],
+        "name": "test",
+        "id": 261
+    },
+    "262": {
+        "x": 1445,
+        "y": 1090,
+        "node_type": "Elevator",
+        "floor": "E2",
+        "connections": [261],
+        "name": "test",
+        "id": 262
+    },
+    "263": {
+        "x": 1300,
+        "y": 1333,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [264],
+        "name": "test",
+        "id": 263
+    },
+    "264": {
+        "x": 1227,
+        "y": 1207,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [246, 263, 265, 266, 270],
+        "name": "test",
+        "id": 264
+    },
+    "265": {
+        "x": 1183,
+        "y": 1341,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [264],
+        "name": "test",
+        "id": 265
+    },
+    "266": {
+        "x": 1033,
+        "y": 1200,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [264, 267, 268],
+        "name": "test",
+        "id": 266
+    },
+    "267": {
+        "x": 1067,
+        "y": 1334,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [266],
+        "name": "test",
+        "id": 267
+    },
+    "268": {
+        "x": 981,
+        "y": 1204,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [266, 192, 191, 193],
+        "name": "test",
+        "id": 268
+    },
+    "269": {
+        "x": 987,
+        "y": 1065,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [269, 269],
+        "name": "test",
+        "id": 269
+    },
+    "270": {
+        "x": 1113,
+        "y": 1070,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [264],
+        "name": "test",
+        "id": 270
+    },
+    "271": {
+        "x": 953,
+        "y": 1336,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [],
+        "name": "test",
+        "id": 271
+    },
+    "272": {
+        "x": 872,
+        "y": 1208,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [194],
+        "name": "test",
+        "id": 272
+    },
+    "273": {
+        "x": 883,
+        "y": 1135,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [],
+        "name": "test",
+        "id": 273
+    },
+    "274": {
+        "x": 889,
+        "y": 1043,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [194],
+        "name": "test",
+        "id": 274
+    },
+    "275": {
+        "x": 814,
+        "y": 1208,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [193, 293, 276, 277],
+        "name": "test",
+        "id": 275
+    },
+    "276": {
+        "x": 832,
+        "y": 1319,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [275],
+        "name": "test",
+        "id": 276
+    },
+    "277": {
+        "x": 717,
+        "y": 1203,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [275, 279, 278],
+        "name": "test",
+        "id": 277
+    },
+    "278": {
+        "x": 721,
+        "y": 1321,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [277],
+        "name": "test",
+        "id": 278
+    },
+    "279": {
+        "x": 664,
+        "y": 1140,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [277, 204, 281, 205],
+        "name": "test",
+        "id": 279
+    },
+    "280": {
+        "x": 791,
+        "y": 1136,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [],
+        "name": "test",
+        "id": 280
+    },
+    "281": {
+        "x": 776,
+        "y": 1044,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [279],
+        "name": "test",
+        "id": 281
+    },
+    "282": {
+        "x": 562,
+        "y": 1204,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [],
+        "name": "test",
+        "id": 282
+    },
+    "283": {
+        "x": 600,
+        "y": 1338,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [205],
+        "name": "test",
+        "id": 283
+    },
+    "284": {
+        "x": 482,
+        "y": 1199,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [205, 216, 289, 284, 284],
+        "name": "test",
+        "id": 284
+    },
+    "285": {
+        "x": 575,
+        "y": 1068,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [205, 286],
+        "name": "test",
+        "id": 285
+    },
+    "286": {
+        "x": 448,
+        "y": 1068,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [285],
+        "name": "test",
+        "id": 286
+    },
+    "287": {
+        "x": 432,
+        "y": 1342,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [214, 288],
+        "name": "test",
+        "id": 287
+    },
+    "288": {
+        "x": 512,
+        "y": 1354,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [287],
+        "name": "test",
+        "id": 288
+    },
+    "289": {
+        "x": 362,
+        "y": 1201,
+        "node_type": "Way",
+        "floor": "E3",
+        "connections": [284, 219, 292, 290],
+        "name": "test",
+        "id": 289
+    },
+    "290": {
+        "x": 334,
+        "y": 1356,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [289],
+        "name": "test",
+        "id": 290
+    },
+    "291": {
+        "x": 309,
+        "y": 1200,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [],
+        "name": "test",
+        "id": 291
+    },
+    "292": {
+        "x": 356,
+        "y": 1057,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [289],
+        "name": "test",
+        "id": 292
+    },
+    "293": {
+        "x": 812,
+        "y": 1170,
+        "node_type": "Room",
+        "floor": "E3",
+        "connections": [275],
+        "name": "test",
+        "id": 293
+    },
+    "294": {
+        "x": 1218,
+        "y": 1066,
+        "node_type": "Stairs",
+        "floor": "E3",
+        "connections": [248, 296, 295],
+        "name": "test",
+        "id": 294
+    },
+    "295": {
+        "x": 1230,
+        "y": 1077,
+        "node_type": "Stairs",
+        "floor": "E2",
+        "connections": [296, 294],
+        "name": "test",
+        "id": 295
+    },
+    "296": {
+        "x": 1056,
+        "y": 1185,
+        "node_type": "Stairs",
+        "floor": "E1",
+        "connections": [295, 294],
+        "name": "test",
+        "id": 296
+    }
+}
