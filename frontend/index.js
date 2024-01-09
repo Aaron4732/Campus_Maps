@@ -91,7 +91,7 @@ function drawLine(points) {
         ctx.beginPath();
         let startPointSet = false;
 
-        for (var i = 1; i < points.length; i++) {
+        for (var i = 0; i < points.length; i++) {
             if (points[i].floor != currentFlore) {
                 continue;
             }
