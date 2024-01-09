@@ -68,7 +68,7 @@ class queue {
     get_path(node_id) {
         let path = [];
         let pathData = []; 
-        while (node_id > 0) {
+        while (true) {
             path.push(node_id);
             let currentNode = this.nodes[node_id];
             pathData.push({
@@ -77,12 +77,16 @@ class queue {
                 type: currentNode.mapnode.node_type,
                 floor: currentNode.mapnode.floor
             });
+
+            if (node_id == 0) {
+                this.number_of_moves = path.length - 1;
+                return pathData.reverse(); 
+            }
+
             node_id = currentNode.parent_node.node_id;
         }
-        this.number_of_moves = path.length - 1;
-        return pathData.reverse(); 
     }
-  
+
     find_solution() {
         this.reset();
         this.set_first_node();
