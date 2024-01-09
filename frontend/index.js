@@ -1,8 +1,19 @@
+//const e = require("express");
+
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
 var img = new Image();
-img.src = 'maps\\05 Stammhaus E1-Bestandsplan B-1.png'; // Setzen Sie die URL Ihres Bildes hier ein
+img.src = 'maps/E1.png'; // Setzen Sie die URL Ihres Bildes hier ein
+var img1 = new Image();
+img1.src = 'maps/E1.png'; // Pfad zu Ihrem ersten Bild
+var img2 = new Image();
+img2.src = 'maps/E2.png'; // Pfad zu Ihrem zweiten Bild
+var img3 = new Image();
+img3.src = 'maps/E3.png'; // Pfad zu Ihrem dritten Bild
+
+let currentFlore = "E1";
+let currentImage = img1
 
 var imgPosition = { x: 0, y: 0 };
 var scale = 1;
@@ -54,7 +65,7 @@ canvas.addEventListener('wheel', function(event) {
 });
 
 function draw() {
-    if (!img.complete) {
+    if (!currentImage.complete) {
         setTimeout(draw, 50); // Warten, bis das Bild geladen ist
         return;
     }
@@ -66,7 +77,7 @@ function draw() {
     ctx.save();
     ctx.translate(imgPosition.x, imgPosition.y);
     ctx.scale(scale, scale);
-    ctx.drawImage(img, 0, 0);
+    ctx.drawImage(currentImage, 0, 0);
 
     // Zeichnen der Linie basierend auf der Koordinatenliste
     ctx.strokeStyle = 'red'; // Farbe der Linie
@@ -78,9 +89,19 @@ function draw() {
 function drawLine(points) {
     if (points.length > 1) {
         ctx.beginPath();
-        ctx.moveTo(points[0].x, points[0].y);
+        let startPointSet = false;
+
         for (var i = 1; i < points.length; i++) {
+            if (points[i].floor != currentFlore) {
+                continue;
+            }
+            if (!startPointSet) {
+                ctx.moveTo(points[i].x, points[i].y);
+                startPointSet = true;
+            }
+            else{
             ctx.lineTo(points[i].x, points[i].y);
+        }
         }
         ctx.stroke();
 }
@@ -179,4 +200,22 @@ window.calculateRoute = function() {
 };
 
 }
+
+// Event-Listener für die Schaltflächen
+document.getElementById('button1').addEventListener('click', function() {
+    currentFlore = "E1";
+    currentImage = img1;
+    draw();
+});
+document.getElementById('button2').addEventListener('click', function() {
+    currentFlore = "E2";
+    currentImage = img2;
+    draw();
+});
+document.getElementById('button3').addEventListener('click', function() {
+    currentFlore = "E3";
+    currentImage = img3;
+    draw();
+});
+
 img.onload = draw;
