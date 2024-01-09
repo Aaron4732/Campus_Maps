@@ -170,9 +170,7 @@ window.calculateRoute = function() {
                 data.path.forEach(node => {
                     console.log('X:', node.x, 'Y:', node.y);
                 });
-                linePoints = data.path.map(node => {
-                    return { x: node.x, y: node.y };
-                });
+                linePoints = data.path
                 draw();
                 addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops, linePoints);
             } 
