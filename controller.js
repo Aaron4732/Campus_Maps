@@ -41,32 +41,6 @@ fs.readFile(filePath, 'utf8', (err, data) => {
 });
 
 
-app.get('/initialize', (req, res) => {
-  // const filePath = path.join(__dirname, '..', 'Campus_Maps', 'Editor', 'circles.json');
-  
-  // fs.readFile(filePath, 'utf8', (err, data) => {
-  //     if (err) {
-  //         console.error('Error reading file:', err);
-  //         return res.status(500).send('Fehler beim Lesen der Datei');
-  //     }
-      
-  //     try {
-  //       const jsonData = JSON.parse(data);
-  //       const mapNodes = {};
-
-  //       for (const key in jsonData) {
-  //           mapNodes[key] = new MapNode(jsonData[key]);
-  //       }
-
-  //       //routeCalculator.setNodes(jsonData); // Nehmen wir an, du hast eine Funktion, die die Nodes setzt
-  //     } catch (parseErr) {
-  //         console.error('Error parsing JSON:', parseErr);
-  //         res.status(500).send('Invalid JSON format');
-  //     }
-  // });
-});
-
-//make /initalize read only delta
 
 app.get('/calculateRoute', (req, res) => {
   const start_name = req.query.startId; 
@@ -75,7 +49,7 @@ app.get('/calculateRoute', (req, res) => {
   const extrastops = req.query.extrastops; 
   try {
       console.log("test: " + start_name, end_name, isBarrierFree, extrastops)
-      let calc = new routeCalculator.queue(mapNodes, start_name, end_name);
+      let calc = new routeCalculator.queue(mapNodes, start_name, end_name, isBarrierFree, extrastops);
       let path = calc.find_solution();
       res.json({path});
   } catch (error) {
@@ -85,8 +59,8 @@ app.get('/calculateRoute', (req, res) => {
 });
 
 app.post('/saveRoute', (req, res) => {
-  const { startId, endId, isBarrierFree, extrastops } = req.body;
-  const newRoute = { startId, endId, isBarrierFree, extrastops };
+  const { startId, endId, isBarrierFree, extrastops, linePoints } = req.body;
+  const newRoute = { startId, endId, isBarrierFree, extrastops, linePoints };
 
   try {
     // Lesen des vorhandenen Cookies
@@ -107,7 +81,6 @@ app.post('/saveRoute', (req, res) => {
 app.get('/getLastRoute', (req, res) => {
   try {
       const lastRoutes = req.cookies.lastRoute;
-      console.log("last route: " + lastRoutes)
       if (!lastRoutes) {
           return res.status(404).json({ message: 'Keine gespeicherten Routen gefunden' });
       }

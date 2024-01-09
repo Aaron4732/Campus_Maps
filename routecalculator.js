@@ -3,7 +3,7 @@
 const mapnode = require('./mapnode');
 
 class queue {
-    constructor(mapnodes_list, start_map_node_name, end_map_node_name) {
+    constructor(mapnodes_list, start_map_node_name, end_map_node_name, is_barrierfree, extra_stops) {
         this.nodes = {};
         this.next_node_id = 0;
         this.open_nodes = {};
@@ -11,6 +11,11 @@ class queue {
         this.mapnodes_list = mapnodes_list;
         this.start_map_node = this.get_map_node_by_name(start_map_node_name);
         this.end_map_node = this.get_map_node_by_name(end_map_node_name);
+        this.is_barrierfree = is_barrierfree;
+        this.extra_stops = extra_stops.split(', ')
+        .filter(stopName => stopName && stopName.trim() !== '')
+        .map(stopName => stopName.trim());
+
     }
     reset() {
         this.nodes = {};
@@ -83,6 +88,8 @@ class queue {
         this.set_first_node();
         let cheapest_node_id = 0;
         while (true) {
+            console.log("IST BARRIERFREI ? " + this.is_barrierfree)
+            console.log("DIE STOPS:" + this.extra_stops)
             if (cheapest_node_id === null) {
                 return null;
             }
@@ -96,6 +103,43 @@ class queue {
         }
     }
 
+    // find_solution() {
+    //     this.reset();
+    //     this.set_first_node();
+    //     let total_path = [];
+    
+    //     let stops = this.extra_stops.length > 0 ? [...this.extra_stops, this.end_map_node_name] : [this.end_map_node_name];
+    //     let current_start = this.start_map_node;
+    
+    //     for (let stop of stops) {
+    //         this.end_map_node = this.get_map_node_by_name(stop);
+    
+    //         let cheapest_node_id = this.find_cheapest_node();
+    //         while (true) {
+    //             if (cheapest_node_id === null) {
+    //                 return null; // Kein Pfad gefunden
+    //             }
+                
+    //             if (this.nodes[cheapest_node_id].mapnode.id === this.end_map_node.id) {
+    //                 let path_segment = this.get_path(cheapest_node_id);
+    //                 total_path.push(...path_segment);
+    //                 break; // Zum nächsten Zwischenstopp wechseln
+    //             }
+    //             this.expand_node(cheapest_node_id);
+    //             cheapest_node_id = this.find_cheapest_node();
+    //         }
+    
+    //         // Aktualisieren Sie den Startpunkt für den nächsten Abschnitt
+    //         current_start = this.nodes[cheapest_node_id].mapnode;
+    //         this.start_map_node = current_start;
+    //         this.reset(); // Reset für den nächsten Abschnitt
+    //         this.set_first_node();
+    //     }
+    
+    //     return total_path;
+    // }
+    
+
     get_map_node_by_name(name)
     {
         for (let a in this.mapnodes_list)
@@ -107,11 +151,6 @@ class queue {
             }
         
         }
-    }
-
-    get_path_for_frontend()
-    {
-        
     }
 
 
@@ -141,7 +180,6 @@ class node {
 
     }
 
-     //this.next_node_id, parent_id, this.nodes[parent_id].cost, mapnode
 }
 
 module.exports = { 

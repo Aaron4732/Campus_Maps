@@ -97,11 +97,11 @@ function getLastRoutes() {
             previousRoutesContainer.innerHTML = '';
 
             routes.forEach(route => {
-                const { startId, endId, isBarrierFree, extrastops } = route;
+                const { startId, endId, isBarrierFree, extrastops, linePoints } = route;
                 const routeElement = document.createElement('button');
                 routeElement.textContent = `Von ${startId} nach ${endId}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
                 routeElement.style.display = 'block';
-                routeElement.onclick = () => loadRouteToForm(startId, endId, isBarrierFree, extrastops);
+                routeElement.onclick = () => loadRouteToForm(startId, endId, isBarrierFree, extrastops, linePoints);
 
                 previousRoutesContainer.appendChild(routeElement);
             });
@@ -109,79 +109,50 @@ function getLastRoutes() {
         .catch(error => console.error('Fehler beim Abrufen der letzten Routen:', error));
 }
 
-function loadRouteToForm(startId, endId, isBarrierFree, extrastops) {
+function loadRouteToForm(startId, endId, isBarrierFree, extrastops, xlinePoints) {
     const startNodeSelect = $('#startNode');
     const endNodeSelect = $('#endNode');
     const barrierFreeCheckbox = document.getElementById('barrierfree');
     const extraStopsSelect = $('#extrastops');
 
-    if (startNodeSelect && endNodeSelect && barrierFreeCheckbox && extraStopsSelect) {
-        startNodeSelect.val(startId).trigger('change');
-        endNodeSelect.val(endId).trigger('change');
-        barrierFreeCheckbox.checked = isBarrierFree === 'Ja';
+    startNodeSelect.val(startId).trigger('change');
+    endNodeSelect.val(endId).trigger('change');
+    barrierFreeCheckbox.checked = isBarrierFree === 'Ja';
 
-        // Vorbelegen der Extrastops
-        const extraStopsArray = extrastops.split(', ');
-        extraStopsSelect.val(extraStopsArray).trigger('change');
-    } else {
-        console.error('Eines oder mehrere Elemente wurden im DOM nicht gefunden');
-    }
+    const extraStopsArray = extrastops.split(', ');
+    extraStopsSelect.val(extraStopsArray).trigger('change');
+    linePoints = xlinePoints;
+    draw();
+    linePoints = [];
 }
-
-// Function to load nodes initially
-function loadNodes() {
-    fetch('/initialize')
-        .then(response => response.json())
-        .then(data => {
-            nodes = data; // Store the nodes globally
-            console.log("Nodes loaded:", nodes);
-        })
-        .catch(error => console.error('Error loading nodes:', error));
-}
-
 
 window.onload = function() {
-    loadNodes();
     getLastRoutes();
 };
 
 
-function saveRoute(startId, endId, isBarrierFree, extrastops, routetoshow) {
+function saveRoute(startId, endId, isBarrierFree, extrastops, linePoints) {
     fetch('/saveRoute', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json' // Sets the Content-Type to application/json
         },
-        body: JSON.stringify({ startId, endId, isBarrierFree, extrastops }) // Converts the object to a JSON string
+        body: JSON.stringify({ startId, endId, isBarrierFree, extrastops,linePoints }) // Converts the object to a JSON string
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // addRouteToPreviousRoutes
-        console.log("Route successfully saved:", body);
-    })
-    .catch(error => {
-        console.error("Error saving the route:", error);
-    });
 }
-
 
 function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
     var routeList = document.getElementById('previousRoutes');
-    var newRouteButton = document.createElement('button'); // Verwenden Sie 'button' anstatt 'li'
+    var newRouteButton = document.createElement('button');
     var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
 
     newRouteButton.textContent = `Von ${startNode} nach ${endNode}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
-    newRouteButton.style.display = 'block'; // Stellen Sie sicher, dass es in einer neuen Zeile angezeigt wird
-    newRouteButton.onclick = () => loadRouteToForm(startNode, endNode, isBarrierFree, extrastops); // Verwenden Sie die gleiche Funktion zum Laden der Route in das Formular
+    newRouteButton.style.display = 'block';
+    newRouteButton.onclick = () => loadRouteToForm(startNode, endNode, isBarrierFree, extrastops, linePoints);
 
-    saveRoute(startNode, endNode, isBarrierFree, extrastops); // Speichern der Route im Backend
+    saveRoute(startNode, endNode, isBarrierFree, extrastops, linePoints);
 
-    routeList.appendChild(newRouteButton); // Fügen Sie den Button zur Liste hinzu
+    routeList.appendChild(newRouteButton);
 }
     
 
@@ -192,22 +163,18 @@ window.calculateRoute = function() {
     var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
     const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
         .map(option => option.value).join(', ');
-    addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops);
 
     fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}&isBarrierFree=${isBarrierFree}&extrastops=${selectedExtraStops}`) 
         .then(response => response.json())
         .then(data => {
-            console.log('Empfangene Route:', data);
-
                 data.path.forEach(node => {
-                    console.log('X:', node.x, 'Y:', node.y); //needs to be written in cookie
+                    console.log('X:', node.x, 'Y:', node.y);
                 });
                 linePoints = data.path.map(node => {
                     return { x: node.x, y: node.y };
                 });
-                console.log(linePoints)
                 draw();
-                //addtopreviousroute muss hieraufgefrufen werden - mit linepoints damit onclick auf previousroutes auch x, y lädt
+                addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops, linePoints);
             } 
         )
         .catch(error => console.error('Error fetching route:', error));
