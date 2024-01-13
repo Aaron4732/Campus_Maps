@@ -26,6 +26,9 @@ def save_circles(scale_factor_widht = 1, scale_factor_height = 1):
 
 
 def main():
+
+    circle_class.load_file("circles.json")
+
     pygame.init()
 
     # Fenstergröße
@@ -262,7 +265,7 @@ def main():
 
         relative_mouse_pos = (relative_mouse_pos_x, relative_mouse_pos_y)
 
-        # Bild zeichnen
+        # Bild zeichnenc
         screen.fill((0, 0, 0))
 
         scaled_image = pygame.transform.scale(background_image, (background_rect.width, background_rect.height))
@@ -276,10 +279,12 @@ def main():
 
         # Verbindungen zeichnen
         for key, circle in circles.items():
-            for opposit_circle in circle.connections:
-                if circle.floor == background_images[current_image_index][1] or circles[opposit_circle].floor == background_images[current_image_index][1]:
+            for opposit_circle_id in circle.connections:
+                opposit_circle = circle_class.get_circle_whit_id(opposit_circle_id)
+                if circle.floor == background_images[current_image_index][1] or opposit_circle.floor == background_images[current_image_index][1]:
+                    
                     start_pos = (background_rect.x + circle.x, background_rect.y + circle.y)
-                    end_pos = (background_rect.x + circles[opposit_circle].x, background_rect.y + circles[opposit_circle].y)
+                    end_pos = (background_rect.x + opposit_circle.x, background_rect.y + opposit_circle.y)
                     pygame.draw.line(screen, (0, 255, 0), start_pos, end_pos, 2)
 
         #Text zu Kreisen zeichnen
