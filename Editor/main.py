@@ -292,7 +292,10 @@ def main():
             if circle.floor == background_images[current_image_index][1]:
                 text = font.render(circle.node_type, True, (0, 0, 0))
                 screen.blit(text, (background_rect.x + circle.x, background_rect.y + circle.y))
-                text = font.render(circle.name, True, (0, 0, 0))
+                if circle.node_type == "Way" or circle.node_type == "Elevator" or circle.node_type == "Stairs":
+                    text = font.render(str(circle.id), True, (0, 0, 0))
+                else:
+                    text = font.render(circle.name, True, (0, 0, 0))
                 screen.blit(text, (background_rect.x + circle.x, background_rect.y + circle.y - 30))
 
 
