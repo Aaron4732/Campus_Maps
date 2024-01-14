@@ -20,6 +20,8 @@ var scale = 1;
 var dragging = false;
 var dragStart = { x: 0, y: 0 };
 
+let circle_radius = 5;
+
 // Liste von Koordinaten für die Linie
 var linePoints = [
     // {x: 361, y: 1318},
@@ -30,6 +32,120 @@ var linePoints = [
     // {x: 700, y: 700},
     // Weitere Koordinaten hier hinzufügen
 ];
+
+//Alle circles mit node_tpye room einfügen
+var circles = [{'x': 1896.5429836766289,
+'y': 1237.048312499866,
+'node_type': 'Room',
+'floor': 'E1',
+'connections': [6],
+'name': 'B.1.02',
+'id': 27},
+{'x': 1286.9656835810458,
+'y': 1302.5845722720273,
+'node_type': 'Room',
+'floor': 'E1',
+'connections': [5],
+'name': 'B.1.10',
+'id': 28},
+{'x': 1317.8936120810154,
+'y': 1239.9848107657983,
+'node_type': 'Room',
+'floor': 'E1',
+'connections': [5],
+'name': 'B.1.09',
+'id': 29},
+{'x': 1167.4400832958393,
+'y': 1297.546656415967,
+'node_type': 'Room',
+'floor': 'E1',
+'connections': [4],
+'name': 'B.1.11',
+'id': 30},
+{'x': 924.7319716106007,
+'y': 1248.1210623470274,
+'node_type': 'Room',
+'floor': 'E1',
+'connections': [2],
+'name': 'B.1.15',
+'id': 31},
+{'x': 895.2385574031978,
+'y': 1298.0459048409045,
+'node_type': 'Room',
+'floor': 'E1',
+'connections': [1],
+'name': 'B.1.11',
+'id': 32},
+{'x': 395.0227377460285,
+'y': 1198.1401893361958,
+'node_type': 'Room',
+'floor': 'E2',
+'connections': [61],
+'name': 'B.2.37',
+'id': 68},
+{'x': 451.67731460697166,
+'y': 1150.8178120664093,
+'node_type': 'Room',
+'floor': 'E2',
+'connections': [60],
+'name': 'B.2.35',
+'id': 69},
+{'x': 414.25410787313757,
+'y': 1239.22225311986,
+'node_type': 'Room',
+'floor': 'E2',
+'connections': [61],
+'name': 'B.2.36',
+'id': 70},
+{'x': 484.94238725926846,
+'y': 1240.7823314913944,
+'node_type': 'Room',
+'floor': 'E2',
+'connections': [63],
+'name': 'B.2.34',
+'id': 71},
+{'x': 570.1841359307804,
+'y': 1149.2577336948732,
+'node_type': 'Room',
+'floor': 'E2',
+'connections': [62],
+'name': 'B.2.33',
+'id': 72},
+{'x': 568.1050688900114,
+'y': 1239.22225311986,
+'node_type': 'Room',
+'floor': 'E2',
+'connections': [62],
+'name': 'B.2.32',
+'id': 73},
+{'x': 741.707166794187,
+'y': 1013.0108892477897,
+'node_type': 'Room',
+'floor': 'E2',
+'connections': [59],
+'name': 'B.2.29',
+'id': 74},
+{'x': 2291.5392483723667,
+'y': 1182.4607224701147,
+'node_type': 'Room',
+'floor': 'E2',
+'connections': [64],
+'name': 'B.2.02',
+'id': 75},
+{'x': 397.4096267217206,
+'y': 1196.757932155515,
+'node_type': 'Room',
+'floor': 'E3',
+'connections': [17],
+'name': 'B.3.34',
+'id': 96},
+{'x': 2297.150694768465,
+'y': 1243.4902880264344,
+'node_type': 'Room',
+'floor': 'E3',
+'connections': [18],
+'name': 'B.3.02',
+'id': 97}]
 
 canvas.addEventListener('mousedown', function(event) {
     dragging = true;
@@ -49,6 +165,25 @@ canvas.addEventListener('mousemove', function(event) {
     }
 
     //console.log(imgPosition, "Mouse:", event.offsetX + imgPosition.x * -1, event.offsetY + imgPosition.y * -1)
+});
+
+canvas.addEventListener('click', function(event) {
+    var rect = canvas.getBoundingClientRect();
+    var scaleX = canvas.width / rect.width;    // Verhältnis der tatsächlichen Größe zur Anzeigegröße
+    var scaleY = canvas.height / rect.height;  // Verhältnis der tatsächlichen Größe zur Anzeigegröße
+
+    var canvasX = (event.clientX - rect.left) * scaleX;
+    var canvasY = (event.clientY - rect.top) * scaleY;
+
+    var worldX = (canvasX - imgPosition.x) / scale;
+    var worldY = (canvasY - imgPosition.y) / scale;
+
+    var clickedNode = return_clicket_node(worldX, worldY);
+
+    if (clickedNode) {
+        console.log("Koordinaten im Bild: X =", worldX, ", Y =", worldY, "Node:", clickedNode);
+    }
+    
 });
 
 canvas.addEventListener('wheel', function(event) {
@@ -83,7 +218,15 @@ function draw() {
     ctx.strokeStyle = 'red'; // Farbe der Linie
     ctx.lineWidth = 2; // Dicke der Linie
     drawLine(linePoints);
+
+
+    // Zeichne Raumpunkte
+    ctx.fillStyle = 'blue';
+    drawPoints();
     ctx.restore();
+
+
+
 }
 
 function drawLine(points) {
@@ -105,7 +248,28 @@ function drawLine(points) {
         }
         ctx.stroke();
 }
+}
 
+function drawPoints() {
+    circles.forEach(function(room) {
+        if (room.floor != currentFlore) {
+            return;
+        }
+        ctx.beginPath();
+        ctx.arc(room.x, room.y, circle_radius *2, 0, 2 * Math.PI); // Kreis für jeden Punkt
+        ctx.fill();
+    });
+}
+
+function return_clicket_node(x, y) {
+    var node = circles.find(function(room) {
+        if (room.floor != currentFlore) {
+            return false;
+        }
+        return Math.sqrt(Math.pow(room.x - x, 2) + Math.pow(room.y - y, 2)) < circle_radius*2;
+    });
+    return node;
+}
 
 // Global variable to store nodes
 var nodes = {};
@@ -199,7 +363,7 @@ window.calculateRoute = function() {
         .catch(error => console.error('Error fetching route:', error));
 };
 
-}
+
 
 // Event-Listener für die Schaltflächen
 document.getElementById('button1').addEventListener('click', function() {
