@@ -1,7 +1,30 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('images and fonts/Montserrat/static/Montserrat-Light.ttf') format('ttf'); /* Update the file extension and format */
+    font-weight: 500;
+    font-style: normal;
+}
+
+button {
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 550;
+    height: 30px;
+    margin: 10px;
+    margin-right: 5px;
+}
+
+h1 {
+    margin-bottom: 0px;
+    font-weight: 400;
+}
+
 body {
     background-color: #e0e6f0;
-    margin: 0;
-    font-family: Arial, sans-serif;
+    margin: 25px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 200;
+    font-size: 18px;
 }
 
 header {
@@ -10,9 +33,17 @@ header {
     padding: 10px 20px;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: -25px;
 }
 
-img {
+#Intro-Text {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: 350;
+}
+
+#logo {
   max-width: 20%;
   height: auto;
 }
@@ -31,7 +62,7 @@ main {
 
 #content-area {
     border: 1px solid #ccc;
-    margin: 20px 0;
+    margin: 20px;
     padding: 20px;
 }
 
@@ -44,6 +75,7 @@ main {
 
 #map-image {
     width: 100%; /* Adjust this to set the initial zoom level */
+    height: auto;
     position: absolute;
     top: 0;
     left: 0;
@@ -62,7 +94,7 @@ main {
 }
 
 .select2-container {
-    width: 10% !important; 
+    width: 10% !important;
 }
 
 /* Stil für den Container der aktuellen Route */
