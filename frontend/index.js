@@ -245,16 +245,9 @@ document.getElementById('continue-btn').addEventListener('click', function() {
     const backButton = document.createElement('button');
     backButton.textContent = 'Zurück zur Startpunktauswahl';
     backButton.addEventListener('click', function() {
-        resetContentArea();
+        location.reload();
     });
 
-    function resetContentArea() {
-        document.getElementById('content-area').innerHTML = initialContent;
-
-        $('#startNode').select2();
-        $('#endNode').select2();
-        $('#extrastops').select2();
-    }
 
     // Text für Ziel
     const endPointLabel = document.createElement('label');
@@ -415,6 +408,12 @@ function showAdditionalOptions() {
     const contentArea = document.getElementById('content-area');
     contentArea.innerHTML = '';
 
+    // Zurück zu Startpunktauswahl Button
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Zurück zur Startpunktauswahl';
+    backButton.addEventListener('click', function() {
+        location.reload();
+    });
 
     const extrastopsLabel = document.createElement('label');
     extrastopsLabel.textContent = 'Zwischenstopp: ';
@@ -451,6 +450,7 @@ function showAdditionalOptions() {
 
 
     // Append der Elemente zur "Extra Optionen" Ansicht in der content area
+    contentArea.appendChild(backButton);
     contentArea.appendChild(extrastopsLabel);
     contentArea.appendChild(extraStopsSelect);
     contentArea.appendChild(barrierFreeCheckbox);
