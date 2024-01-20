@@ -13,7 +13,7 @@
 </head>
 <body>
 <header>
-    <div logo> <img id="logo" src="images and fonts/CampusMaps_LOGO.png" alt="CampusMaps Logo"> </div>
+    <div> <img id="logo" src="images and fonts/CampusMaps_LOGO.png" alt="CampusMaps Logo"> </div>
     <button id="info-button">I</button>
 </header>
 
@@ -21,7 +21,7 @@
 <p id="Intro-Text">das Navigationssystem für den Bauteil B der FH Campus Wien. Starten Sie gleich mit dem Auswählen Ihrer Route. </p>
 
 <div id="content-area">
-    <p>Wählen Sie einen Startpunkt entweder durch Eingabe eines Raumes in ihrer Nähe, oder durch Auswählen eines Punktes auf der Karte.</p>
+    <p>Wählen Sie einen Startpunkt entweder durch Eingabe oder Auswahl eines Raumes in ihrer Nähe, oder durch Auswählen eines Punktes auf der Karte.</p>
 
     <label for="startNode">Start:</label>
     <select id="startNode">
@@ -139,6 +139,8 @@
         </div>
     </select>
 
+    <button id="start-map-btn">Startpunkt auf Karte auswählen</button>
+
     <button id="continue-btn">Weiter</button> <br>
 
 </div> <!-- Dynamisches Feld für Routenauswahl, etc. -->
@@ -153,16 +155,16 @@
 
 
     <div id="previousRoutesContainer">
-         <label for="previousRoutes">Vorherige Routen:</label>
+         <h2><label for="previousRoutes">Vorherige Routen:</label></h2>
          <ul id="previousRoutes"></ul>
 
     </div>
 
     <script>
         $(document).ready(function() {
-        $('#startNode').select2();
-        $('#endNode').select2();
-        $('#extrastops').select2();
+            $('#startNode').select2();
+            $('#endNode').select2();
+            $('#extrastops').select2();
     });
     </script>
 

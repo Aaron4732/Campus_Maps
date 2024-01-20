@@ -232,10 +232,10 @@ img.onload = draw;
 
 
 // *_*_*_*_*_*_* New *_*_*_*_*_*_*
-
 var initialContent = document.getElementById('content-area').innerHTML;
 
 
+// Content Area Endpunktauswahl-Ansicht
 document.getElementById('continue-btn').addEventListener('click', function() {
     // Content area leeren
     const contentArea = document.getElementById('content-area');
@@ -381,6 +381,41 @@ document.getElementById('continue-btn').addEventListener('click', function() {
              </select>
     `;
 
+     const chooseOnMapButton = document.createElement('button');
+     chooseOnMapButton.textContent = 'Ziel auf der Karte wählen';
+     chooseOnMapButton.addEventListener('click', function() {
+
+            // Funktion um Ziel auf Karte zu wählen hier implementieren
+
+     });
+
+     const continueButton = document.createElement('button');
+          continueButton.textContent = 'Weiter';
+          continueButton.addEventListener('click', function() {
+              showAdditionalOptions();
+          });
+
+    // Append der Elemente zur Ziel-Auswahl Ansicht in der content area
+    contentArea.appendChild(backButton);
+    contentArea.appendChild(endPointLabel);
+    contentArea.appendChild(endPointSelect);
+    contentArea.appendChild(chooseOnMapButton);
+    contentArea.appendChild(continueButton);
+
+
+    // Select2 für endNode dropdown und Zwischenstopps
+    $(document).ready(function() {
+        $('#endNode').select2();
+    });
+});
+
+
+
+function showAdditionalOptions() {
+    const contentArea = document.getElementById('content-area');
+    contentArea.innerHTML = '';
+
+
     const extrastopsLabel = document.createElement('label');
     extrastopsLabel.textContent = 'Zwischenstopp: ';
     extrastopsLabel.setAttribute('for', 'extrastops');
@@ -414,10 +449,8 @@ document.getElementById('continue-btn').addEventListener('click', function() {
         calculateRoute();
     });
 
-    // Append der Elemente zur content area
-    contentArea.appendChild(backButton);
-    contentArea.appendChild(endPointLabel);
-    contentArea.appendChild(endPointSelect);
+
+    // Append der Elemente zur "Extra Optionen" Ansicht in der content area
     contentArea.appendChild(extrastopsLabel);
     contentArea.appendChild(extraStopsSelect);
     contentArea.appendChild(barrierFreeCheckbox);
@@ -427,7 +460,10 @@ document.getElementById('continue-btn').addEventListener('click', function() {
 
     // Select2 für endNode dropdown und Zwischenstopps
     $(document).ready(function() {
-        $('#endNode').select2();
         $('#extrastops').select2();
     });
-});
+
+};
+
+
+
