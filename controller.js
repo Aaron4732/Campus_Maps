@@ -1,3 +1,4 @@
+// Einbindung der erforderlichen Module
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -7,6 +8,7 @@ const PORT = 3000;
 const MapNode = require('./mapnode');
 const routeCalculator = require('./routecalculator.js');
 
+// Konfiguration des statischen Dateiservers für das Frontend
 app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.use(session({
@@ -15,22 +17,31 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    secure: false, //only for https
+    secure: false, // nur für HTTPS erforderlich
   }
 }));
+
 const cookieParser = require('cookie-parser');
-app.use(cookieParser());  
-app.use(express.json()) //für cookie von lastRoute
+app.use(cookieParser());
+
+// Einbindung von JSON-Parser-Middleware für eingehende JSON-Anfragen
+app.use(express.json());
+
 const mapNodes = {};
+
+// Definieren des Pfads zur JSON-Datei, die die Kartenknoten enthält
 const filePath = path.join(__dirname, '..', 'Campus_Maps', 'Editor', 'circles.json');
 
+// Lesen der Kartenknotendaten aus einer Datei
 fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
         console.error('Error reading file:', err);
+        return;
     }
     try {
       const jsonData = JSON.parse(data);
 
+      // Erstellen von MapNode-Objekten aus den gelesenen Daten
       for (const key in jsonData) {
           mapNodes[key] = new MapNode(jsonData[key]);
       }
@@ -40,15 +51,15 @@ fs.readFile(filePath, 'utf8', (err, data) => {
     }
 });
 
-
-
+// Route für das Berechnen einer Strecke
 app.get('/calculateRoute', (req, res) => {
   const start_name = req.query.startId; 
   const end_name = req.query.endId;
   const isBarrierFree = req.query.isBarrierFree;
   const extrastops = req.query.extrastops; 
+
   try {
-      console.log("test: " + start_name, end_name, isBarrierFree, extrastops)
+      // Erstellung eines neuen RouteCalculator-Objekts und Suche nach einer Lösung
       let calc = new routeCalculator.queue(mapNodes, start_name, end_name, isBarrierFree, extrastops);
       let path = calc.find_solution();
       res.json({path});
@@ -58,44 +69,6 @@ app.get('/calculateRoute', (req, res) => {
   }
 });
 
-app.post('/saveRoute', (req, res) => {
-  const { startId, endId, isBarrierFree, extrastops, linePoints } = req.body;
-  const newRoute = { startId, endId, isBarrierFree, extrastops, linePoints };
-
-  try {
-    // Lesen des vorhandenen Cookies
-    const existingRoutes = req.cookies.lastRoute ? JSON.parse(req.cookies.lastRoute) : [];
-    
-    // Hinzufügen der neuen Route zum Array
-    existingRoutes.push(newRoute);
-
-    // Aktualisieren des Cookies mit dem neuen Array von Routen
-    res.cookie('lastRoute', JSON.stringify(existingRoutes), { maxAge: 86400000, httpOnly: true });
-    res.json({ message: 'Route gespeichert' });
-  } catch (error) {
-    console.error('Fehler beim Speichern der Route:', error);
-    res.status(500).json({ error: 'Fehler beim Speichern der Route' });
-  }
-});
-
-app.get('/getLastRoute', (req, res) => {
-  try {
-      const lastRoutes = req.cookies.lastRoute;
-      if (!lastRoutes) {
-          return res.status(404).json({ message: 'Keine gespeicherten Routen gefunden' });
-      }
-
-      const routes = JSON.parse(lastRoutes);
-      res.json(routes);
-  } catch (error) {
-      console.error('Fehler beim Abrufen der letzten Routen:', error);
-      res.status(500).json({ error: 'Serverfehler beim Abrufen der letzten Routen' });
-  }
-});
-
-
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
-
-

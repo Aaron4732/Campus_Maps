@@ -16,29 +16,12 @@
     <div> <img id="logo" src="images and fonts/CampusMaps_LOGO.png" alt="CampusMaps Logo"> </div>
     <button id="info-button">I</button>
 </header>
-
-<h1>Willkommen auf CampusMaps,</h1>
-<p id="Intro-Text">das Navigationssystem für den Bauteil B der FH Campus Wien. Starten Sie gleich mit dem Auswählen Ihrer Route. </p>
-
-<div id="content-area">
-
-</div> <!-- Dynamisches Feld für Routenauswahl, etc. -->
-
-<div>
-    <button id="button1">E1</button>
-    <button id="button2">E2</button>
-    <button id="button3">E3</button>
-</div>
-
-<canvas id="myCanvas" width="1240" height="877" style="border:1px solid #000000;"></canvas>
-
-
     <div id="previousRoutesContainer">
          <h2><label for="previousRoutes">Vorherige Routen:</label></h2>
          <ul id="previousRoutes"></ul>
 
     </div>
-
+    <canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;"></canvas>
     <script>
         $(document).ready(function() {
             $('#startNode').select2();

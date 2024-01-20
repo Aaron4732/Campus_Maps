@@ -31,13 +31,6 @@ let selectedExtraStops = [];
 
 // Liste von Koordinaten für die Linie
 var linePoints = [
-    // {x: 361, y: 1318},
-    // {x: 580, y: 1318},
-    // {x: 580, y: 1275},
-    // {x: 400, y: 300},
-    // {x: 500, y: 200},
-    // {x: 700, y: 700},
-    // Weitere Koordinaten hier hinzufügen
 ];
 
 var circles = [{'x': 1896.5429836766289,
@@ -294,27 +287,19 @@ function return_clicket_node(x, y) {
     return node;
 }
 
-// Global variable to store nodes
-var nodes = {};
+function getLastRoutes() { //no need to call up controller anymore as client saves the last route
+    const routes = JSON.parse(localStorage.getItem('lastRoute')) || [];
+    const previousRoutesContainer = document.getElementById('previousRoutes');
+    previousRoutesContainer.innerHTML = '';
 
-function getLastRoutes() {
-    fetch('/getLastRoute')
-        .then(response => response.json())
-        .then(routes => {
-            const previousRoutesContainer = document.getElementById('previousRoutes');
-            previousRoutesContainer.innerHTML = '';
-
-            routes.forEach(route => {
-                const { startId, endId, isBarrierFree, extrastops, linePoints } = route;
-                const routeElement = document.createElement('button');
-                routeElement.textContent = `Von ${startId} nach ${endId}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
-                routeElement.style.display = 'block';
-                routeElement.onclick = () => loadRouteToForm(startId, endId, isBarrierFree, extrastops, linePoints);
-
-                previousRoutesContainer.appendChild(routeElement);
-            });
-        })
-        .catch(error => console.error('Fehler beim Abrufen der letzten Routen:', error));
+    routes.forEach(route => {
+        const { startId, endId, isBarrierFree, extrastops, linePoints } = route;
+        const routeElement = document.createElement('button');
+        routeElement.textContent = `Von ${startId} nach ${endId}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
+        routeElement.style.display = 'block';
+        routeElement.onclick = () => loadRouteToForm(startId, endId, isBarrierFree, extrastops, linePoints);
+        previousRoutesContainer.appendChild(routeElement);
+    });
 }
 
 function loadRouteToForm(startId, endId, isBarrierFree, extrastops, xlinePoints) {
@@ -331,25 +316,20 @@ function loadRouteToForm(startId, endId, isBarrierFree, extrastops, xlinePoints)
     extraStopsSelect.val(extraStopsArray).trigger('change');
     linePoints = xlinePoints;
     draw();
-    linePoints = [];
 }
 
 window.onload = function() {
     getLastRoutes();
 };
 
-
-function saveRoute(startId, endId, isBarrierFree, extrastops, linePoints) {
-    fetch('/saveRoute', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' // Sets the Content-Type to application/json
-        },
-        body: JSON.stringify({ startId, endId, isBarrierFree, extrastops,linePoints }) // Converts the object to a JSON string
-    })
+function saveRoute(startId, endId, isBarrierFree, extrastops, linePoints) { //no need to call up controller anymore as client saves the last route
+    const newRoute = { startId, endId, isBarrierFree, extrastops, linePoints };
+    const existingRoutes = JSON.parse(localStorage.getItem('lastRoute')) || [];
+    existingRoutes.push(newRoute);
+    localStorage.setItem('lastRoute', JSON.stringify(existingRoutes));
 }
 
-function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
+function addRouteToPreviousRoutes(startNode, endNode, extrastops, linePoints) {
     var routeList = document.getElementById('previousRoutes');
     var newRouteButton = document.createElement('button');
     var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
@@ -357,12 +337,9 @@ function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
     newRouteButton.textContent = `Von ${startNode} nach ${endNode}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
     newRouteButton.style.display = 'block';
     newRouteButton.onclick = () => loadRouteToForm(startNode, endNode, isBarrierFree, extrastops, linePoints);
-
     saveRoute(startNode, endNode, isBarrierFree, extrastops, linePoints);
-
     routeList.appendChild(newRouteButton);
 }
-
 
 
 window.calculateRoute = function() {
@@ -375,9 +352,6 @@ window.calculateRoute = function() {
     fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}&isBarrierFree=${isBarrierFree}&extrastops=${selectedExtraStops}`)
         .then(response => response.json())
         .then(data => {
-                data.path.forEach(node => {
-                    console.log('X:', node.x, 'Y:', node.y);
-                });
                 linePoints = data.path
                 draw();
                 addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops, linePoints);
