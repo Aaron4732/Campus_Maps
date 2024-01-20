@@ -21,6 +21,7 @@ var dragging = false;
 var dragStart = { x: 0, y: 0 };
 
 let circle_radius = 5;
+let clickedNode = false;
 
 // Liste von Koordinaten für die Linie
 var linePoints = [
@@ -177,11 +178,13 @@ canvas.addEventListener('click', function(event) {
     var worldX = (canvasX - imgPosition.x) / scale;
     var worldY = (canvasY - imgPosition.y) / scale;
 
-    var clickedNode = return_clicket_node(worldX, worldY);
+    clickedNode = return_clicket_node(worldX, worldY);
 
     if (clickedNode) {
         console.log("Koordinaten im Bild: X =", worldX, ", Y =", worldY, "Node:", clickedNode);
     }
+
+    draw();
     
 });
 
@@ -262,6 +265,12 @@ function drawPoints() {
     circles.forEach(function(room) {
         if (room.floor != currentFlore) {
             return;
+        }
+        if (clickedNode && room.id == clickedNode.id) {
+            ctx.fillStyle = 'green';
+        }
+        else {
+            ctx.fillStyle = 'blue';
         }
         ctx.beginPath();
         ctx.arc(room.x, room.y, circle_radius *2, 0, 2 * Math.PI); // Kreis für jeden Punkt
