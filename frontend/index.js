@@ -23,6 +23,12 @@ var dragStart = { x: 0, y: 0 };
 let circle_radius = 5;
 let clickedNode = false;
 
+// Variablen für Route
+let startOption = null;
+let endOption = null;  
+let isBarrierFree = false;
+let selectedExtraStops = [];
+
 // Liste von Koordinaten für die Linie
 var linePoints = [
     // {x: 361, y: 1318},
@@ -555,9 +561,14 @@ document.getElementById('continue-btn').addEventListener('click', function() {
      const chooseOnMapButton = document.createElement('button');
      chooseOnMapButton.textContent = 'Ziel auf der Karte wählen';
      chooseOnMapButton.addEventListener('click', function() {
-
+        if (clickedNode) {
+            endOption = clickedNode.name;
+            console.log('Ziel:', endOption);
+        }
+        else {
+            alert('Bitte wählen Sie einen Raum auf der Karte aus!');
+        }
             // Funktion um Ziel auf Karte zu wählen hier implementieren
-
      });
 
      const continueButton = document.createElement('button');
