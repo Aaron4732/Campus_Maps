@@ -366,9 +366,9 @@ function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
 
 
 window.calculateRoute = function() {
-    let startOption = document.getElementById('startNode').value;
-    let endOption = document.getElementById('endNode').value;
-    var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
+    //let startOption = document.getElementById('startNode').value;
+    //let endOption = document.getElementById('endNode').value;
+    //var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
     const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
         .map(option => option.value).join(', ');
 
@@ -411,9 +411,176 @@ img.onload = draw;
 // *_*_*_*_*_*_* New *_*_*_*_*_*_*
 var initialContent = document.getElementById('content-area').innerHTML;
 
+// Content Area Startpunktauswahl-Ansicht
+
+//document.getElementById('continue-btn').addEventListener('click', function() {
+    // Content area leeren
+function showStartpointSelection() {
+    const contentArea = document.getElementById('content-area');
+    contentArea.innerHTML = '';
+
+    // Text für Ziel
+    const endPointLabel = document.createElement('label');
+    endPointLabel.textContent = 'Start: ';
+    endPointLabel.setAttribute('for', 'endNode');
+
+    // Dropdown-Menü für Endpunktauswahl
+    const endPointSelect = document.createElement('select');
+    endPointSelect.id = 'endNode';
+    endPointSelect.innerHTML = `
+             <select id="endNode">
+             <div id="endNodeOptions" class="dropdown-container">
+                 <option value="A.1.1a">A.1.1a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+                 <option value="A.1.1b">A.1.1b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+                 <option value="B.1.01">B.1.01</option>
+                 <option value="B.1.02">B.1.02</option>
+                 <option value="B.1.03">B.1.03</option>
+                 <option value="B.1.04">B.1.04</option>
+                 <option value="B.1.05">B.1.05</option>
+                 <option value="B.1.06">B.1.06</option>
+                 <option value="B.1.07">B.1.07</option>
+                 <option value="B.1.08">B.1.08</option>
+                 <option value="B.1.09">B.1.09</option>
+                 <option value="B.1.10">B.1.10</option>
+                 <option value="B.1.11">B.1.11</option>
+                 <option value="B.1.12">B.1.12</option>
+                 <option value="B.1.13">B.1.13</option>
+                 <option value="B.1.14">B.1.14</option>
+                 <option value="B.1.15">B.1.15</option>
+                 <option value="B.1.16">B.1.16</option>
+                 <option value="B.1.17">B.1.17</option>
+                 <option value="B.1.18">B.1.18</option>
+                 <option value="B.1.19">B.1.19</option>
+                 <option value="B.1.20">B.1.20</option>
+                 <option value="B.1.21">B.1.21</option>
+                 <option value="B.1.22">B.1.22</option>
+                 <option value="B.1.23">B.1.23</option>
+                 <option value="B.1.24">B.1.24</option>
+                 <option value="B.1.25">B.1.25</option>
+                 <option value="B.1.26">B.1.26</option>
+                 <option value="B.1.27">B.1.27</option>
+                 <option value="B.1.28">B.1.28</option>
+                 <option value="B.1.29">B.1.29</option>
+                 <option value="B.1.30">B.1.30</option>
+                 <option value="B.2.01">B.2.01</option>
+                 <option value="B.2.02">B.2.02</option>
+                 <option value="B.2.03">B.2.03</option>
+                 <option value="B.2.04">B.2.04</option>
+                 <option value="B.2.05">B.2.05</option>
+                 <option value="B.2.06">B.2.06</option>
+                 <option value="B.2.07">B.2.07</option>
+                 <option value="B.2.08">B.2.08</option>
+                 <option value="B.2.09">B.2.09</option>
+                 <option value="B.2.10">B.2.10</option>
+                 <option value="B.2.11">B.2.11</option>
+                 <option value="B.2.12">B.2.12</option>
+                 <option value="B.2.13">B.2.13</option>
+                 <option value="B.2.14">B.2.14</option>
+                 <option value="B.2.15">B.2.15</option>
+                 <option value="B.2.16">B.2.16</option>
+                 <option value="B.2.17">B.2.17</option>
+                 <option value="B.2.18">B.2.18</option>
+                 <option value="B.2.19">B.2.19</option>
+                 <option value="B.2.20">B.2.20</option>
+                 <option value="B.2.21">B.2.21</option>
+                 <option value="B.2.22">B.2.22</option>
+                 <option value="B.2.23">B.2.23</option>
+                 <option value="B.2.24">B.2.24</option>
+                 <option value="B.2.25">B.2.25</option>
+                 <option value="B.2.26">B.2.26</option>
+                 <option value="B.2.27">B.2.27</option>
+                 <option value="B.2.28">B.2.28</option>
+                 <option value="B.2.29">B.2.29</option>
+                 <option value="B.2.30">B.2.30</option>
+                 <option value="B.2.31">B.2.31</option>
+                 <option value="B.2.32">B.2.32</option>
+                 <option value="B.2.33">B.2.33</option>
+                 <option value="B.2.34">B.2.34</option>
+                 <option value="B.2.35">B.2.35</option>
+                 <option value="B.2.36">B.2.36</option>
+                 <option value="B.2.37">B.2.37</option>
+                 <option value="B.2.38">B.2.38</option>
+                 <option value="B.2.39">B.2.39</option>
+                 <option value="B.3.01">B.3.01</option>
+                 <option value="B.3.02">B.3.02</option>
+                 <option value="B.3.03">B.3.03</option>
+                 <option value="B.3.04">B.3.04</option>
+                 <option value="B.3.05">B.3.05</option>
+                 <option value="B.3.06">B.3.06</option>
+                 <option value="B.3.7a">B.3.07a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+                 <option value="B.3.7b">B.3.07b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+                 <option value="B.3.08">B.3.08</option>
+                 <option value="B.3.09">B.3.09</option>
+                 <option value="B.3.10">B.3.10</option>
+                 <option value="B.3.11">B.3.11</option>
+                 <option value="B.3.12">B.3.12</option>
+                 <option value="B.3.13">B.3.13</option>
+                 <option value="B.3.14">B.3.14</option>
+                 <option value="B.3.15">B.3.15</option>
+                 <option value="B.3.16">B.3.16</option>
+                 <option value="B.3.17">B.3.17</option>
+                 <option value="B.3.18">B.3.18</option>
+                 <option value="B.3.19">B.3.19</option>
+                 <option value="B.3.20">B.3.20</option>
+                 <option value="B.3.21a">B.3.21a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+                 <option value="B.3.21b">B.3.21b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+                 <option value="B.3.22">B.3.22</option>
+                 <option value="B.3.23">B.3.23</option>
+                 <option value="B.3.24">B.3.24</option>
+                 <option value="B.3.25">B.3.25</option>
+                 <option value="B.3.26">B.3.26</option>
+                 <option value="B.3.27">B.3.27</option>
+                 <option value="B.3.28">B.3.28</option>
+                 <option value="B.3.29">B.3.29</option>
+                 <option value="B.3.30a">B.3.30a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+                 <option value="B.3.30b">B.3.30b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+                 <option value="B.3.31">B.3.31</option>
+                 <option value="B.3.32">B.3.32</option>
+                 <option value="B.3.33">B.3.33</option>
+                 <option value="B.3.34">B.3.34</option>
+                 <option value="B.3.35">B.3.35</option>
+                 <option value="B.3.36">B.3.37</option>
+             </div>
+             </select>
+    `;
+
+     const chooseOnMapButton = document.createElement('button');
+     chooseOnMapButton.textContent = 'Start auf der Karte wählen';
+     chooseOnMapButton.addEventListener('click', function() {
+        if (clickedNode) {
+            startOption = clickedNode.name;
+            console.log('Start:', endOption);
+            showEndpointSelection();
+        }
+        else {
+            alert('Bitte wählen Sie einen Raum auf der Karte aus!');
+        }
+            // Funktion um Ziel auf Karte zu wählen hier implementieren
+     });
+
+     const continueButton = document.createElement('button');
+          continueButton.textContent = 'Weiter';
+          continueButton.addEventListener('click', function() {
+            startOption = document.getElementById('endNode').value;
+            showEndpointSelection();
+          });
+
+    // Append der Elemente zur Ziel-Auswahl Ansicht in der content area
+    contentArea.appendChild(endPointLabel);
+    contentArea.appendChild(endPointSelect);
+    contentArea.appendChild(chooseOnMapButton);
+    contentArea.appendChild(continueButton);
+
+
+    // Select2 für endNode dropdown und Zwischenstopps
+    $(document).ready(function() {
+        $('#endNode').select2();
+    });
+};
+
 
 // Content Area Endpunktauswahl-Ansicht
-document.getElementById('continue-btn').addEventListener('click', function() {
+function showEndpointSelection() {
     // Content area leeren
     const contentArea = document.getElementById('content-area');
     contentArea.innerHTML = '';
@@ -422,7 +589,7 @@ document.getElementById('continue-btn').addEventListener('click', function() {
     const backButton = document.createElement('button');
     backButton.textContent = 'Zurück zur Startpunktauswahl';
     backButton.addEventListener('click', function() {
-        resetContentArea();
+        showStartpointSelection();
     });
 
     function resetContentArea() {
@@ -564,6 +731,7 @@ document.getElementById('continue-btn').addEventListener('click', function() {
         if (clickedNode) {
             endOption = clickedNode.name;
             console.log('Ziel:', endOption);
+            showAdditionalOptions();
         }
         else {
             alert('Bitte wählen Sie einen Raum auf der Karte aus!');
@@ -574,6 +742,7 @@ document.getElementById('continue-btn').addEventListener('click', function() {
      const continueButton = document.createElement('button');
           continueButton.textContent = 'Weiter';
           continueButton.addEventListener('click', function() {
+            endOption = document.getElementById('endNode').value;
               showAdditionalOptions();
           });
 
@@ -589,7 +758,7 @@ document.getElementById('continue-btn').addEventListener('click', function() {
     $(document).ready(function() {
         $('#endNode').select2();
     });
-});
+};
 
 
 
@@ -646,6 +815,9 @@ function showAdditionalOptions() {
     });
 
 };
+
+
+showStartpointSelection();
 
 
 
