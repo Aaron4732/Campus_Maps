@@ -31,7 +31,6 @@ var linePoints = [
     // Weitere Koordinaten hier hinzufügen
 ];
 
-
 canvas.addEventListener('mousedown', function(event) {
     dragging = true;
     dragStart.x = event.offsetX - imgPosition.x;
@@ -116,28 +115,19 @@ function drawLine(points) {
         ctx.stroke();
 }
 
+function getLastRoutes() { //no need to call up controller anymore as client saves the last route
+    const routes = JSON.parse(localStorage.getItem('lastRoute')) || [];
+    const previousRoutesContainer = document.getElementById('previousRoutes');
+    previousRoutesContainer.innerHTML = '';
 
-// Global variable to store nodes
-var nodes = {};
-
-function getLastRoutes() {
-    fetch('/getLastRoute')
-        .then(response => response.json())
-        .then(routes => {
-            const previousRoutesContainer = document.getElementById('previousRoutes');
-            previousRoutesContainer.innerHTML = '';
-
-            routes.forEach(route => {
-                const { startId, endId, isBarrierFree, extrastops, linePoints } = route;
-                const routeElement = document.createElement('button');
-                routeElement.textContent = `Von ${startId} nach ${endId}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
-                routeElement.style.display = 'block';
-                routeElement.onclick = () => loadRouteToForm(startId, endId, isBarrierFree, extrastops, linePoints);
-
-                previousRoutesContainer.appendChild(routeElement);
-            });
-        })
-        .catch(error => console.error('Fehler beim Abrufen der letzten Routen:', error));
+    routes.forEach(route => {
+        const { startId, endId, isBarrierFree, extrastops, linePoints } = route;
+        const routeElement = document.createElement('button');
+        routeElement.textContent = `Von ${startId} nach ${endId}, barrierefrei: ${isBarrierFree} | extra stops: ${extrastops}`;
+        routeElement.style.display = 'block';
+        routeElement.onclick = () => loadRouteToForm(startId, endId, isBarrierFree, extrastops, linePoints);
+        previousRoutesContainer.appendChild(routeElement);
+    });
 }
 
 function loadRouteToForm(startId, endId, isBarrierFree, extrastops, xlinePoints) {
@@ -161,18 +151,14 @@ window.onload = function() {
     getLastRoutes();
 };
 
-
-function saveRoute(startId, endId, isBarrierFree, extrastops, linePoints) {
-    fetch('/saveRoute', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' // Sets the Content-Type to application/json
-        },
-        body: JSON.stringify({ startId, endId, isBarrierFree, extrastops,linePoints }) // Converts the object to a JSON string
-    })
+function saveRoute(startId, endId, isBarrierFree, extrastops, linePoints) { //no need to call up controller anymore as client saves the last route
+    const newRoute = { startId, endId, isBarrierFree, extrastops, linePoints };
+    const existingRoutes = JSON.parse(localStorage.getItem('lastRoute')) || [];
+    existingRoutes.push(newRoute);
+    localStorage.setItem('lastRoute', JSON.stringify(existingRoutes));
 }
 
-function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
+function addRouteToPreviousRoutes(startNode, endNode, extrastops, linePoints) {
     var routeList = document.getElementById('previousRoutes');
     var newRouteButton = document.createElement('button');
     var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
@@ -186,16 +172,14 @@ function addRouteToPreviousRoutes(startNode, endNode, extrastops) {
     routeList.appendChild(newRouteButton);
 }
 
-
-
 window.calculateRoute = function() {
-    let startOption = document.getElementById('startNode').value;
+    let startOption = document.getElementById('startNode').value; 
     let endOption = document.getElementById('endNode').value;
     var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
     const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
         .map(option => option.value).join(', ');
 
-    fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}&isBarrierFree=${isBarrierFree}&extrastops=${selectedExtraStops}`)
+    fetch(`/calculateRoute?startId=${startOption}&endId=${endOption}&isBarrierFree=${isBarrierFree}&extrastops=${selectedExtraStops}`) 
         .then(response => response.json())
         .then(data => {
                 data.path.forEach(node => {
@@ -204,14 +188,14 @@ window.calculateRoute = function() {
                 linePoints = data.path
                 draw();
                 addRouteToPreviousRoutes(startOption, endOption, selectedExtraStops, linePoints);
-            }
+            } 
         )
         .catch(error => console.error('Error fetching route:', error));
 };
 
 }
 
-// Event-Listener für die Ebenen Buttons
+// Event-Listener für die Schaltflächen
 document.getElementById('button1').addEventListener('click', function() {
     currentFlore = "E1";
     currentImage = img1;
