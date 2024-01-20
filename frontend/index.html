@@ -13,275 +13,158 @@
 </head>
 <body>
 <header>
-    <div logo> <img src="images and fonts/CampusMaps_LOGO.png" alt="CampusMaps Logo"> </div>
+    <div> <img id="logo" src="images and fonts/CampusMaps_LOGO.png" alt="CampusMaps Logo"> </div>
     <button id="info-button">I</button>
 </header>
 
-    <h1>Willkommen auf CampusMaps,</h1>
-<p>das Navigationssystem für den Bauteil B der FH Campus Wien. Starten Sie gleich mit dem Auswählen Ihrer Route. </p>
-    <label for="startNode">Von:</label>
+<h1>Willkommen auf CampusMaps,</h1>
+<p id="Intro-Text">das Navigationssystem für den Bauteil B der FH Campus Wien. Starten Sie gleich mit dem Auswählen Ihrer Route. </p>
+
+<div id="content-area">
+    <p>Wählen Sie einen Startpunkt entweder durch Eingabe oder Auswahl eines Raumes in ihrer Nähe, oder durch Auswählen eines Punktes auf der Karte.</p>
+
+    <label for="startNode">Start:</label>
     <select id="startNode">
-    <div id="startNodeOptions" class="dropdown-container">
-        <option value="A.1.1a">A.1.1a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="A.1.1b">A.1.1b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.1.01">B.1.01</option>
-        <option value="B.1.02">B.1.02</option>
-        <option value="B.1.03">B.1.03</option>
-        <option value="B.1.04">B.1.04</option>
-        <option value="B.1.05">B.1.05</option>
-        <option value="B.1.06">B.1.06</option>
-        <option value="B.1.07">B.1.07</option>
-        <option value="B.1.08">B.1.08</option>
-        <option value="B.1.09">B.1.09</option>
-        <option value="B.1.10">B.1.10</option>
-        <option value="B.1.11">B.1.11</option>
-        <option value="B.1.12">B.1.12</option>
-        <option value="B.1.13">B.1.13</option>
-        <option value="B.1.14">B.1.14</option>
-        <option value="B.1.15">B.1.15</option>
-        <option value="B.1.16">B.1.16</option>
-        <option value="B.1.17">B.1.17</option>
-        <option value="B.1.18">B.1.18</option>
-        <option value="B.1.19">B.1.19</option>
-        <option value="B.1.20">B.1.20</option>
-        <option value="B.1.21">B.1.21</option>
-        <option value="B.1.22">B.1.22</option>
-        <option value="B.1.23">B.1.23</option>
-        <option value="B.1.24">B.1.24</option>
-        <option value="B.1.25">B.1.25</option>
-        <option value="B.1.26">B.1.26</option>
-        <option value="B.1.27">B.1.27</option>
-        <option value="B.1.28">B.1.28</option>
-        <option value="B.1.29">B.1.29</option>
-        <option value="B.1.30">B.1.30</option>
-        <option value="B.2.01">B.2.01</option>
-        <option value="B.2.02">B.2.02</option>
-        <option value="B.2.03">B.2.03</option>
-        <option value="B.2.04">B.2.04</option>
-        <option value="B.2.05">B.2.05</option>
-        <option value="B.2.06">B.2.06</option>
-        <option value="B.2.07">B.2.07</option>
-        <option value="B.2.08">B.2.08</option>
-        <option value="B.2.09">B.2.09</option>
-        <option value="B.2.10">B.2.10</option>
-        <option value="B.2.11">B.2.11</option>
-        <option value="B.2.12">B.2.12</option>
-        <option value="B.2.13">B.2.13</option>
-        <option value="B.2.14">B.2.14</option>
-        <option value="B.2.15">B.2.15</option>
-        <option value="B.2.16">B.2.16</option>
-        <option value="B.2.17">B.2.17</option>
-        <option value="B.2.18">B.2.18</option>
-        <option value="B.2.19">B.2.19</option>
-        <option value="B.2.20">B.2.20</option>
-        <option value="B.2.21">B.2.21</option>
-        <option value="B.2.22">B.2.22</option>
-        <option value="B.2.23">B.2.23</option>
-        <option value="B.2.24">B.2.24</option>
-        <option value="B.2.25">B.2.25</option>
-        <option value="B.2.26">B.2.26</option>
-        <option value="B.2.27">B.2.27</option>
-        <option value="B.2.28">B.2.28</option>
-        <option value="B.2.29">B.2.29</option>
-        <option value="B.2.30">B.2.30</option>
-        <option value="B.2.31">B.2.31</option>
-        <option value="B.2.32">B.2.32</option>
-        <option value="B.2.33">B.2.33</option>
-        <option value="B.2.34">B.2.34</option>
-        <option value="B.2.35">B.2.35</option>
-        <option value="B.2.36">B.2.36</option>
-        <option value="B.2.37">B.2.37</option>
-        <option value="B.2.38">B.2.38</option>
-        <option value="B.2.39">B.2.39</option>
-        <option value="B.3.01">B.3.01</option>
-        <option value="B.3.02">B.3.02</option>
-        <option value="B.3.03">B.3.03</option>
-        <option value="B.3.04">B.3.04</option>
-        <option value="B.3.05">B.3.05</option>
-        <option value="B.3.06">B.3.06</option>
-        <option value="B.3.7a">B.3.07a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.7b">B.3.07b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.08">B.3.08</option>
-        <option value="B.3.09">B.3.09</option>
-        <option value="B.3.10">B.3.10</option>
-        <option value="B.3.11">B.3.11</option>
-        <option value="B.3.12">B.3.12</option>
-        <option value="B.3.13">B.3.13</option>
-        <option value="B.3.14">B.3.14</option>
-        <option value="B.3.15">B.3.15</option>
-        <option value="B.3.16">B.3.16</option>
-        <option value="B.3.17">B.3.17</option>
-        <option value="B.3.18">B.3.18</option>
-        <option value="B.3.19">B.3.19</option>
-        <option value="B.3.20">B.3.20</option>
-        <option value="B.3.21a">B.3.21a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.21b">B.3.21b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.22">B.3.22</option>
-        <option value="B.3.23">B.3.23</option>
-        <option value="B.3.24">B.3.24</option>
-        <option value="B.3.25">B.3.25</option>
-        <option value="B.3.26">B.3.26</option>
-        <option value="B.3.27">B.3.27</option>
-        <option value="B.3.28">B.3.28</option>
-        <option value="B.3.29">B.3.29</option>
-        <option value="B.3.30a">B.3.30a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.30b">B.3.30b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.31">B.3.31</option>
-        <option value="B.3.32">B.3.32</option>
-        <option value="B.3.33">B.3.33</option>
-        <option value="B.3.34">B.3.34</option>
-        <option value="B.3.35">B.3.35</option>
-        <option value="B.3.36">B.3.37</option>
-    </div>
+        <div id="startNodeOptions" class="dropdown-container">
+            <option value="A.1.1a">A.1.1a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+            <option value="A.1.1b">A.1.1b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+            <option value="B.1.01">B.1.01</option>
+            <option value="B.1.02">B.1.02</option>
+            <option value="B.1.03">B.1.03</option>
+            <option value="B.1.04">B.1.04</option>
+            <option value="B.1.05">B.1.05</option>
+            <option value="B.1.06">B.1.06</option>
+            <option value="B.1.07">B.1.07</option>
+            <option value="B.1.08">B.1.08</option>
+            <option value="B.1.09">B.1.09</option>
+            <option value="B.1.10">B.1.10</option>
+            <option value="B.1.11">B.1.11</option>
+            <option value="B.1.12">B.1.12</option>
+            <option value="B.1.13">B.1.13</option>
+            <option value="B.1.14">B.1.14</option>
+            <option value="B.1.15">B.1.15</option>
+            <option value="B.1.16">B.1.16</option>
+            <option value="B.1.17">B.1.17</option>
+            <option value="B.1.18">B.1.18</option>
+            <option value="B.1.19">B.1.19</option>
+            <option value="B.1.20">B.1.20</option>
+            <option value="B.1.21">B.1.21</option>
+            <option value="B.1.22">B.1.22</option>
+            <option value="B.1.23">B.1.23</option>
+            <option value="B.1.24">B.1.24</option>
+            <option value="B.1.25">B.1.25</option>
+            <option value="B.1.26">B.1.26</option>
+            <option value="B.1.27">B.1.27</option>
+            <option value="B.1.28">B.1.28</option>
+            <option value="B.1.29">B.1.29</option>
+            <option value="B.1.30">B.1.30</option>
+            <option value="B.2.01">B.2.01</option>
+            <option value="B.2.02">B.2.02</option>
+            <option value="B.2.03">B.2.03</option>
+            <option value="B.2.04">B.2.04</option>
+            <option value="B.2.05">B.2.05</option>
+            <option value="B.2.06">B.2.06</option>
+            <option value="B.2.07">B.2.07</option>
+            <option value="B.2.08">B.2.08</option>
+            <option value="B.2.09">B.2.09</option>
+            <option value="B.2.10">B.2.10</option>
+            <option value="B.2.11">B.2.11</option>
+            <option value="B.2.12">B.2.12</option>
+            <option value="B.2.13">B.2.13</option>
+            <option value="B.2.14">B.2.14</option>
+            <option value="B.2.15">B.2.15</option>
+            <option value="B.2.16">B.2.16</option>
+            <option value="B.2.17">B.2.17</option>
+            <option value="B.2.18">B.2.18</option>
+            <option value="B.2.19">B.2.19</option>
+            <option value="B.2.20">B.2.20</option>
+            <option value="B.2.21">B.2.21</option>
+            <option value="B.2.22">B.2.22</option>
+            <option value="B.2.23">B.2.23</option>
+            <option value="B.2.24">B.2.24</option>
+            <option value="B.2.25">B.2.25</option>
+            <option value="B.2.26">B.2.26</option>
+            <option value="B.2.27">B.2.27</option>
+            <option value="B.2.28">B.2.28</option>
+            <option value="B.2.29">B.2.29</option>
+            <option value="B.2.30">B.2.30</option>
+            <option value="B.2.31">B.2.31</option>
+            <option value="B.2.32">B.2.32</option>
+            <option value="B.2.33">B.2.33</option>
+            <option value="B.2.34">B.2.34</option>
+            <option value="B.2.35">B.2.35</option>
+            <option value="B.2.36">B.2.36</option>
+            <option value="B.2.37">B.2.37</option>
+            <option value="B.2.38">B.2.38</option>
+            <option value="B.2.39">B.2.39</option>
+            <option value="B.3.01">B.3.01</option>
+            <option value="B.3.02">B.3.02</option>
+            <option value="B.3.03">B.3.03</option>
+            <option value="B.3.04">B.3.04</option>
+            <option value="B.3.05">B.3.05</option>
+            <option value="B.3.06">B.3.06</option>
+            <option value="B.3.7a">B.3.07a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+            <option value="B.3.7b">B.3.07b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+            <option value="B.3.08">B.3.08</option>
+            <option value="B.3.09">B.3.09</option>
+            <option value="B.3.10">B.3.10</option>
+            <option value="B.3.11">B.3.11</option>
+            <option value="B.3.12">B.3.12</option>
+            <option value="B.3.13">B.3.13</option>
+            <option value="B.3.14">B.3.14</option>
+            <option value="B.3.15">B.3.15</option>
+            <option value="B.3.16">B.3.16</option>
+            <option value="B.3.17">B.3.17</option>
+            <option value="B.3.18">B.3.18</option>
+            <option value="B.3.19">B.3.19</option>
+            <option value="B.3.20">B.3.20</option>
+            <option value="B.3.21a">B.3.21a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+            <option value="B.3.21b">B.3.21b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+            <option value="B.3.22">B.3.22</option>
+            <option value="B.3.23">B.3.23</option>
+            <option value="B.3.24">B.3.24</option>
+            <option value="B.3.25">B.3.25</option>
+            <option value="B.3.26">B.3.26</option>
+            <option value="B.3.27">B.3.27</option>
+            <option value="B.3.28">B.3.28</option>
+            <option value="B.3.29">B.3.29</option>
+            <option value="B.3.30a">B.3.30a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+            <option value="B.3.30b">B.3.30b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
+            <option value="B.3.31">B.3.31</option>
+            <option value="B.3.32">B.3.32</option>
+            <option value="B.3.33">B.3.33</option>
+            <option value="B.3.34">B.3.34</option>
+            <option value="B.3.35">B.3.35</option>
+            <option value="B.3.36">B.3.37</option>
+        </div>
     </select>
-    <label for="endNode">Nach:</label>
-    <select id="endNode">
-    <div id="endNodeOptions" class="dropdown-container">
-        <option value="A.1.1a">A.1.1a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="A.1.1b">A.1.1b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.1.01">B.1.01</option>
-        <option value="B.1.02">B.1.02</option>
-        <option value="B.1.03">B.1.03</option>
-        <option value="B.1.04">B.1.04</option>
-        <option value="B.1.05">B.1.05</option>
-        <option value="B.1.06">B.1.06</option>
-        <option value="B.1.07">B.1.07</option>
-        <option value="B.1.08">B.1.08</option>
-        <option value="B.1.09">B.1.09</option>
-        <option value="B.1.10">B.1.10</option>
-        <option value="B.1.11">B.1.11</option>
-        <option value="B.1.12">B.1.12</option>
-        <option value="B.1.13">B.1.13</option>
-        <option value="B.1.14">B.1.14</option>
-        <option value="B.1.15">B.1.15</option>
-        <option value="B.1.16">B.1.16</option>
-        <option value="B.1.17">B.1.17</option>
-        <option value="B.1.18">B.1.18</option>
-        <option value="B.1.19">B.1.19</option>
-        <option value="B.1.20">B.1.20</option>
-        <option value="B.1.21">B.1.21</option>
-        <option value="B.1.22">B.1.22</option>
-        <option value="B.1.23">B.1.23</option>
-        <option value="B.1.24">B.1.24</option>
-        <option value="B.1.25">B.1.25</option>
-        <option value="B.1.26">B.1.26</option>
-        <option value="B.1.27">B.1.27</option>
-        <option value="B.1.28">B.1.28</option>
-        <option value="B.1.29">B.1.29</option>
-        <option value="B.1.30">B.1.30</option>
-        <option value="B.2.01">B.2.01</option>
-        <option value="B.2.02">B.2.02</option>
-        <option value="B.2.03">B.2.03</option>
-        <option value="B.2.04">B.2.04</option>
-        <option value="B.2.05">B.2.05</option>
-        <option value="B.2.06">B.2.06</option>
-        <option value="B.2.07">B.2.07</option>
-        <option value="B.2.08">B.2.08</option>
-        <option value="B.2.09">B.2.09</option>
-        <option value="B.2.10">B.2.10</option>
-        <option value="B.2.11">B.2.11</option>
-        <option value="B.2.12">B.2.12</option>
-        <option value="B.2.13">B.2.13</option>
-        <option value="B.2.14">B.2.14</option>
-        <option value="B.2.15">B.2.15</option>
-        <option value="B.2.16">B.2.16</option>
-        <option value="B.2.17">B.2.17</option>
-        <option value="B.2.18">B.2.18</option>
-        <option value="B.2.19">B.2.19</option>
-        <option value="B.2.20">B.2.20</option>
-        <option value="B.2.21">B.2.21</option>
-        <option value="B.2.22">B.2.22</option>
-        <option value="B.2.23">B.2.23</option>
-        <option value="B.2.24">B.2.24</option>
-        <option value="B.2.25">B.2.25</option>
-        <option value="B.2.26">B.2.26</option>
-        <option value="B.2.27">B.2.27</option>
-        <option value="B.2.28">B.2.28</option>
-        <option value="B.2.29">B.2.29</option>
-        <option value="B.2.30">B.2.30</option>
-        <option value="B.2.31">B.2.31</option>
-        <option value="B.2.32">B.2.32</option>
-        <option value="B.2.33">B.2.33</option>
-        <option value="B.2.34">B.2.34</option>
-        <option value="B.2.35">B.2.35</option>
-        <option value="B.2.36">B.2.36</option>
-        <option value="B.2.37">B.2.37</option>
-        <option value="B.2.38">B.2.38</option>
-        <option value="B.2.39">B.2.39</option>
-        <option value="B.3.01">B.3.01</option>
-        <option value="B.3.02">B.3.02</option>
-        <option value="B.3.03">B.3.03</option>
-        <option value="B.3.04">B.3.04</option>
-        <option value="B.3.05">B.3.05</option>
-        <option value="B.3.06">B.3.06</option>
-        <option value="B.3.7a">B.3.07a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.7b">B.3.07b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.08">B.3.08</option>
-        <option value="B.3.09">B.3.09</option>
-        <option value="B.3.10">B.3.10</option>
-        <option value="B.3.11">B.3.11</option>
-        <option value="B.3.12">B.3.12</option>
-        <option value="B.3.13">B.3.13</option>
-        <option value="B.3.14">B.3.14</option>
-        <option value="B.3.15">B.3.15</option>
-        <option value="B.3.16">B.3.16</option>
-        <option value="B.3.17">B.3.17</option>
-        <option value="B.3.18">B.3.18</option>
-        <option value="B.3.19">B.3.19</option>
-        <option value="B.3.20">B.3.20</option>
-        <option value="B.3.21a">B.3.21a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.21b">B.3.21b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.22">B.3.22</option>
-        <option value="B.3.23">B.3.23</option>
-        <option value="B.3.24">B.3.24</option>
-        <option value="B.3.25">B.3.25</option>
-        <option value="B.3.26">B.3.26</option>
-        <option value="B.3.27">B.3.27</option>
-        <option value="B.3.28">B.3.28</option>
-        <option value="B.3.29">B.3.29</option>
-        <option value="B.3.30a">B.3.30a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.30b">B.3.30b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-        <option value="B.3.31">B.3.31</option>
-        <option value="B.3.32">B.3.32</option>
-        <option value="B.3.33">B.3.33</option>
-        <option value="B.3.34">B.3.34</option>
-        <option value="B.3.35">B.3.35</option>
-        <option value="B.3.36">B.3.37</option>
-    </div>
-    </select>
-    <label for="extrastops">Extra Stops:</label>
-    <select id="extrastops" multiple>
-    <div id="extrastopsOptions" class="dropdown-container">
-        <option value=" "> </option>
-        <option value="Aufzug">Aufzug</option>
-        <option value="Automat">Automat</option>
-        <option value="Kaffee">Kaffee</option>
-        <option value="WC">WC</option>
-    </div>
-    </select>
-    <input type="checkbox" id="barrierfree">
-    <label for="barrierfree"> barrierefrei</label>
-    <button onclick="calculateRoute()">Calculate Route</button>
+
+    <button id="start-map-btn">Startpunkt auf Karte auswählen</button>
+
+    <button id="continue-btn">Weiter</button> <br>
+
+</div> <!-- Dynamisches Feld für Routenauswahl, etc. -->
+
+<div>
+    <button id="button1">E1</button>
+    <button id="button2">E2</button>
+    <button id="button3">E3</button>
+</div>
+
+<canvas id="myCanvas" width="1240" height="877" style="border:1px solid #000000;"></canvas>
+
+
     <div id="previousRoutesContainer">
-         <label for="previousRoutes">Vorherige Routen:</label>
+         <h2><label for="previousRoutes">Vorherige Routen:</label></h2>
          <ul id="previousRoutes"></ul>
+
     </div>
-
-        <div>
-        <button id="button1">E1</button>
-        <button id="button2">E2</button>
-        <button id="button3">E3</button>
-    </div>
-    
-    <canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;"></canvas>
-
-
 
     <script>
         $(document).ready(function() {
-        $('#startNode').select2();
-        $('#endNode').select2();
-        $('#extrastops').select2();
+            $('#startNode').select2();
+            $('#endNode').select2();
+            $('#extrastops').select2();
     });
     </script>
 
