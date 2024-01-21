@@ -5,10 +5,10 @@
 
 
 ## Web Applikation starten
-1. NodeJS Module installlieren
+1. NodeJS Module installlieren  
     npm install 
 
-2. Applikation starten
+2. Applikation starten  
     npm start
 
 ## Web Applikation bedienen
