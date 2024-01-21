@@ -25,8 +25,8 @@ let clickedNode = false;
 
 // Variablen für Route
 let startOption = null; let endOption = null;  
-let isBarrierFree = "Nein";
-// let selectedExtraStops = [];
+let isBarrierFree = null;
+let selectedExtraStops = [];
 
 // Liste von Koordinaten für die Linie
 var linePoints = [
@@ -301,28 +301,25 @@ function getLastRoutes() { //no need to call up controller anymore as client sav
     });
 }
 
-function loadRouteToForm(startId, endId, isBarrierFree, extrastops, xlinePoints) {
-    const startNodeSelect = $('#startNode');
-    const endNodeSelect = $('#endNode');
-    const barrierFreeCheckbox = document.getElementById('barrierfree');
-    const extraStopsSelect = $('#extrastops');
-
-    startNodeSelect.val(startId).trigger('change');
-    endNodeSelect.val(endId).trigger('change');
-    console.log(document.getElementById('barrierfree'))
-    if (barrierFreeCheckbox.checked) {
-        isBarrierFree = 'Ja';
-    } else {
-        isBarrierFree = 'Nein';
-    }
-
-    const extraStopsArray = extrastops.split(', ');
-    extraStopsSelect.val(extraStopsArray).trigger('change');
+function loadRouteToForm(startId, endId, BarrierFree, extrastops, xlinePoints) {
+    startOption = startId;
+    endOption = endId;
+    isBarrierFree = BarrierFree;
+    selectedExtraStops = [];
+    selectedExtraStops = extrastops;
     linePoints = xlinePoints;
+    const startNodeSelect = $('#startNode');
+    startNodeSelect.val(startOption).trigger('change');
+    const endNodeSelect = $('#endNode');
+    endNodeSelect.val(endOption).trigger('change');
+    const extraStopsSelect1 = $('#extrastops');
+    const extraStopsArray = selectedExtraStops.split(', ');
+    extraStopsSelect1.val(extraStopsArray).trigger('change');
+    const barrierFreeCheckbox1 = $('#barrierfree');
+    barrierFreeCheckbox1.prop('checked', isBarrierFree === 'Ja');
+    
     draw();
 }
-
-
 
 function saveRoute(startId, endId, isBarrierFree, extrastops, linePoints) { //no need to call up controller anymore as client saves the last route
     const newRoute = { startId, endId, isBarrierFree, extrastops, linePoints };
@@ -543,7 +540,12 @@ function showStartpointSelection() {
     contentArea.appendChild(startPointSelect);
     contentArea.appendChild(chooseOnMapButton);
     contentArea.appendChild(continueButton);
+    const startNodeSelect = $('#startNode');
+    startNodeSelect.val(startOption).trigger('change');
+    
 
+    // const startNodeSelect = $('#startNode');
+    // startNodeSelect.val(startId).trigger('change');
 
     // Select2 für endNode dropdown und Zwischenstopps
     $(document).ready(function() {
@@ -716,7 +718,9 @@ function showEndpointSelection() {
     contentArea.appendChild(endPointSelect);
     contentArea.appendChild(chooseOnMapButton);
     contentArea.appendChild(continueButton);
-
+    
+    const endNodeSelect = $('#endNode');
+    endNodeSelect.val(endOption).trigger('change');
 
     // Select2 für endNode dropdown und Zwischenstopps
     $(document).ready(function() {
@@ -779,6 +783,12 @@ function showAdditionalOptions() {
     contentArea.appendChild(barrierFreeLabel);
     contentArea.appendChild(calcRouteButton);
 
+    const barrierFreeCheckbox1 = $('#barrierfree');
+    barrierFreeCheckbox1.prop('checked', isBarrierFree === 'Ja');
+ 
+    const extraStopsSelect1 = $('#extrastops');
+    const extraStopsArray = selectedExtraStops.split(', ');
+    extraStopsSelect1.val(extraStopsArray).trigger('change');
 
     // Select2 für endNode dropdown und Zwischenstopps
     $(document).ready(function() {
@@ -787,26 +797,11 @@ function showAdditionalOptions() {
 
 };
 
-function initializeUI() {
-    // Erstellen Sie die Checkbox, falls sie noch nicht vorhanden ist
-    let barrierFreeCheckbox = document.getElementById('barrierfree');
-    if (!barrierFreeCheckbox) {
-        barrierFreeCheckbox = document.createElement('input');
-        barrierFreeCheckbox.type = 'checkbox';
-        barrierFreeCheckbox.id = 'barrierfree';
-
-        // Fügen Sie die Checkbox an die gewünschte Stelle im DOM ein
-        // Zum Beispiel könnte dies ein Element im `content-area` sein
-        const contentArea = document.getElementById('content-area');
-        contentArea.appendChild(barrierFreeCheckbox);
-    }
-}
 
 img.onload = draw;
 
 window.onload = function() {
     showStartpointSelection();
-    //initializeUI();
     getLastRoutes();
 };
 
