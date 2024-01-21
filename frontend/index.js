@@ -24,7 +24,7 @@ let circle_radius = 5;
 let clickedNode = false;
 
 // Variablen für Route
-let startOption = null; let endOption = null;  
+let startOption = null; let endOption = null;
 let isBarrierFree = "Nein";
 // let selectedExtraStops = [];
 
@@ -183,7 +183,7 @@ canvas.addEventListener('click', function(event) {
     }
 
     draw();
-    
+
 });
 
 canvas.addEventListener('wheel', function(event) {
@@ -394,12 +394,19 @@ function showStartpointSelection() {
     const contentArea = document.getElementById('content-area');
     contentArea.innerHTML = '';
 
-    // Text für Ziel
+    //Info-Text für Start
+    const startInfoText = document.createElement('text');
+    startInfoText.textContent = 'Wählen Sie einen Startpunkt entweder durch Eingabe oder Auswahl eines Raumes in ihrer Nähe, oder durch Auswählen eines Punktes auf der Karte.';
+
+    const linebreak = document.createElement('br');
+    linebreak.innerHTML = '<br>';
+
+    // Text für Start
     const startPointLabel = document.createElement('label');
     startPointLabel.textContent = 'Start: ';
     startPointLabel.setAttribute('for', 'startNode');
 
-    // Dropdown-Menü für Endpunktauswahl
+    // Dropdown-Menü für Startpunktauswahl
     const startPointSelect = document.createElement('select');
     startPointSelect.id = 'startNode';
     startPointSelect.innerHTML = `
@@ -539,6 +546,8 @@ function showStartpointSelection() {
           });
 
     // Append der Elemente zur Ziel-Auswahl Ansicht in der content area
+    contentArea.appendChild(startInfoText);
+    contentArea.appendChild(linebreak);
     contentArea.appendChild(startPointLabel);
     contentArea.appendChild(startPointSelect);
     contentArea.appendChild(chooseOnMapButton);
@@ -557,6 +566,12 @@ function showEndpointSelection() {
     // Content area leeren
     const contentArea = document.getElementById('content-area');
     contentArea.innerHTML = '';
+
+        const endInfoText = document.createElement('text');
+        endInfoText.textContent = 'Wählen Sie Ihr Ziel entweder durch Eingabe oder Auswahl eines Raumes, oder durch Auswählen eines Punktes auf der Karte.';
+
+        const linebreak = document.createElement('br');
+        linebreak.innerHTML = '<br>';
 
     // Zurück zu Startpunktauswahl Button
     const backButton = document.createElement('button');
@@ -711,6 +726,8 @@ function showEndpointSelection() {
           });
 
     // Append der Elemente zur Ziel-Auswahl Ansicht in der content area
+    contentArea.appendChild(endInfoText);
+    contentArea.appendChild(linebreak);
     contentArea.appendChild(backButton);
     contentArea.appendChild(endPointLabel);
     contentArea.appendChild(endPointSelect);
@@ -729,6 +746,12 @@ function showEndpointSelection() {
 function showAdditionalOptions() {
     const contentArea = document.getElementById('content-area');
     contentArea.innerHTML = '';
+
+    const extraOptionsInfoText = document.createElement('text');
+    extraOptionsInfoText.textContent = 'Wählen Sie optional einen Zwischenstopp aus der Liste oder, dass Ihnen nur barrierfreie Routen angezeigt werden.';
+
+    const linebreak = document.createElement('br');
+    linebreak.innerHTML = '<br>';
 
     // Zurück zu Startpunktauswahl Button
     const backButton = document.createElement('button');
@@ -772,6 +795,8 @@ function showAdditionalOptions() {
 
 
     // Append der Elemente zur "Extra Optionen" Ansicht in der content area
+    contentArea.appendChild(extraOptionsInfoText);
+    contentArea.appendChild(linebreak);
     contentArea.appendChild(backButton);
     contentArea.appendChild(extrastopsLabel);
     contentArea.appendChild(extraStopsSelect);
