@@ -32,118 +32,7 @@ let selectedExtraStops = [];
 var linePoints = [
 ];
 
-var circles = [{'x': 1896.5429836766289,
-'y': 1237.048312499866,
-'node_type': 'Room',
-'floor': 'E1',
-'connections': [6],
-'name': 'B.1.02',
-'id': 27},
-{'x': 1286.9656835810458,
-'y': 1302.5845722720273,
-'node_type': 'Room',
-'floor': 'E1',
-'connections': [5],
-'name': 'B.1.10',
-'id': 28},
-{'x': 1317.8936120810154,
-'y': 1239.9848107657983,
-'node_type': 'Room',
-'floor': 'E1',
-'connections': [5],
-'name': 'B.1.09',
-'id': 29},
-{'x': 1167.4400832958393,
-'y': 1297.546656415967,
-'node_type': 'Room',
-'floor': 'E1',
-'connections': [4],
-'name': 'B.1.11',
-'id': 30},
-{'x': 924.7319716106007,
-'y': 1248.1210623470274,
-'node_type': 'Room',
-'floor': 'E1',
-'connections': [2],
-'name': 'B.1.15',
-'id': 31},
-{'x': 895.2385574031978,
-'y': 1298.0459048409045,
-'node_type': 'Room',
-'floor': 'E1',
-'connections': [1],
-'name': 'B.1.11',
-'id': 32},
-{'x': 395.0227377460285,
-'y': 1198.1401893361958,
-'node_type': 'Room',
-'floor': 'E2',
-'connections': [61],
-'name': 'B.2.37',
-'id': 68},
-{'x': 451.67731460697166,
-'y': 1150.8178120664093,
-'node_type': 'Room',
-'floor': 'E2',
-'connections': [60],
-'name': 'B.2.35',
-'id': 69},
-{'x': 414.25410787313757,
-'y': 1239.22225311986,
-'node_type': 'Room',
-'floor': 'E2',
-'connections': [61],
-'name': 'B.2.36',
-'id': 70},
-{'x': 484.94238725926846,
-'y': 1240.7823314913944,
-'node_type': 'Room',
-'floor': 'E2',
-'connections': [63],
-'name': 'B.2.34',
-'id': 71},
-{'x': 570.1841359307804,
-'y': 1149.2577336948732,
-'node_type': 'Room',
-'floor': 'E2',
-'connections': [62],
-'name': 'B.2.33',
-'id': 72},
-{'x': 568.1050688900114,
-'y': 1239.22225311986,
-'node_type': 'Room',
-'floor': 'E2',
-'connections': [62],
-'name': 'B.2.32',
-'id': 73},
-{'x': 741.707166794187,
-'y': 1013.0108892477897,
-'node_type': 'Room',
-'floor': 'E2',
-'connections': [59],
-'name': 'B.2.29',
-'id': 74},
-{'x': 2291.5392483723667,
-'y': 1182.4607224701147,
-'node_type': 'Room',
-'floor': 'E2',
-'connections': [64],
-'name': 'B.2.02',
-'id': 75},
-{'x': 397.4096267217206,
-'y': 1196.757932155515,
-'node_type': 'Room',
-'floor': 'E3',
-'connections': [17],
-'name': 'B.3.34',
-'id': 96},
-{'x': 2297.150694768465,
-'y': 1243.4902880264344,
-'node_type': 'Room',
-'floor': 'E3',
-'connections': [18],
-'name': 'B.3.02',
-'id': 97}]
+var circles = []
 
 canvas.addEventListener('mousedown', function(event) {
     dragging = true;
@@ -301,6 +190,8 @@ function getLastRoutes() { //no need to call up controller anymore as client sav
     });
 }
 
+
+
 function loadRouteToForm(startId, endId, BarrierFree, extrastops, xlinePoints) {
     startOption = startId;
     endOption = endId;
@@ -358,6 +249,35 @@ window.calculateRoute = function() {
         )
         .catch(error => console.error('Error fetching route:', error));
 };
+
+function transformMapNodes(mapNodes) {
+    let transformedCircles = [];
+    for (const key in mapNodes) {
+        const node = mapNodes[key];
+        if (node.node_type === 'Room' || node.node_type === 'Elevator') { // Add other types if necessary
+            transformedCircles.push({
+                x: node.x,
+                y: node.y,
+                node_type: node.node_type,
+                floor: node.floor,
+                connections: node.connectedNodes,
+                name: node.name,
+                id: node.id
+            });
+        }
+    }
+    return transformedCircles;
+}
+
+function getCircles() {
+    fetch(`/getCircles`)
+        .then(response => response.json())
+        .then(data => {
+            circles = transformMapNodes(data.mapNodes);
+            draw();
+        })
+        .catch(error => console.error('Error fetching circles:', error));
+}
 
 
 
@@ -787,8 +707,11 @@ function showAdditionalOptions() {
     barrierFreeCheckbox1.prop('checked', isBarrierFree === 'Ja');
  
     const extraStopsSelect1 = $('#extrastops');
-    const extraStopsArray = selectedExtraStops.split(', ');
-    extraStopsSelect1.val(extraStopsArray).trigger('change');
+    if (selectedExtraStops.length > 0)
+    {
+        const extraStopsArray = selectedExtraStops.split(', ');
+        extraStopsSelect1.val(extraStopsArray).trigger('change');
+    }
 
     // Select2 für endNode dropdown und Zwischenstopps
     $(document).ready(function() {
@@ -801,6 +724,7 @@ function showAdditionalOptions() {
 img.onload = draw;
 
 window.onload = function() {
+    getCircles();
     showStartpointSelection();
     getLastRoutes();
 };

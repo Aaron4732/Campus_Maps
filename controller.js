@@ -69,6 +69,30 @@ app.get('/calculateRoute', (req, res) => {
   }
 });
 
+app.get('/getCircles', (req, res) => {
+  const filePath = path.join(__dirname, '..', 'Campus_Maps', 'Editor', 'circles.json');
+
+  // Lesen der Kartenknotendaten aus einer Datei
+  fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+          console.error('Error reading file:', err);
+          return;
+      }
+      try {
+        const jsonData = JSON.parse(data);
+  
+        // Erstellen von MapNode-Objekten aus den gelesenen Daten
+        for (const key in jsonData) {
+            mapNodes[key] = new MapNode(jsonData[key]);
+        }
+        res.json({mapNodes});
+      } catch (parseErr) {
+          console.error('Error parsing JSON:', parseErr);
+      }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
