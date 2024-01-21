@@ -5,7 +5,7 @@
 
 
 ## Web Applikation starten
-1. NodeJS Module installlieren
+1. NodeJS Module installlieren\n
     npm install 
 
 2. Applikation starten
