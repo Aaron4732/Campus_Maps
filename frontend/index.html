@@ -9,13 +9,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
+
 </head>
 <body>
 <header>
     <div> <img id="logo" src="images and fonts/CampusMaps_LOGO.png" alt="CampusMaps Logo"> </div>
-    <button id="info-button">I</button>
 </header>
+
+<h1>Willkommen auf CampusMaps,</h1>
+<p id="Intro-Text">das Navigationssystem für den Bauteil B der FH Campus Wien. Starten Sie gleich mit dem Auswählen Ihrer Route. </p>
 
 <div id="content-area">
 
@@ -27,15 +29,15 @@
     <button id="button3">E3</button>
 </div>
 
-    <canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;"></canvas>
+<canvas id="myCanvas" width="1240" height="877" style="border:1px solid #000000;"></canvas>
 
-    <div id="previousRoutesContainer">
-        <h2><label for="previousRoutes">Vorherige Routen:</label></h2>
-        <ul id="previousRoutes"></ul>
+<div id="previousRoutesContainer">
+    <h2><label for="previousRoutes">Vorherige Routen:</label></h2>
+    <ul id="previousRoutes"></ul>
 
-   </div>
+</div>
 
-    <script>
+<script>
         $(document).ready(function() {
             $('#startNode').select2();
             $('#endNode').select2();

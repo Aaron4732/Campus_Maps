@@ -66,58 +66,52 @@ class queue {
     }
 
     // Erweitert einen Knoten, indem es verbundene Knoten prüft und hinzufügt
-    expand_node(node_id) {
-        delete this.open_nodes[node_id];
-        let parent_node = this.nodes[node_id];
-    
-        for (let mapnode_id of parent_node.mapnode.get_connectednodes()) {
-            if (!parent_node.mapnode.compare_mapnodes(mapnode_id)) {
-                if (!this.check_if_node_exists(mapnode_id)) {
-                    this.add_node(node_id, this.mapnodes_list[mapnode_id]);
-                }
-            }
-        }
-    }
-
-    //läuft mit dem Code in Endlosschleife
-
     // expand_node(node_id) {
     //     delete this.open_nodes[node_id];
     //     let parent_node = this.nodes[node_id];
-
+    
     //     for (let mapnode_id of parent_node.mapnode.get_connectednodes()) {
     //         if (!parent_node.mapnode.compare_mapnodes(mapnode_id)) {
-    //             let connected_node = this.mapnodes_list[mapnode_id];
-    //             if (!this.check_if_node_exists(connected_node) && this.is_node_valid_for_path(connected_node, parent_node)) {
-    //                 this.add_node(node_id, connected_node);
+    //             if (!this.check_if_node_exists(mapnode_id)) {
+    //                 this.add_node(node_id, this.mapnodes_list[mapnode_id]);
     //             }
     //         }
     //     }
     // }
 
-    // is_node_valid_for_path(node, parentNode) {
-    //     // Wenn barrierefrei aktiviert ist, keine Treppen verwenden
-    //     if (this.is_barrierfree && node.node_type === 'stairs') {
-    //         return false;
-    //     }
+    //läuft mit dem Code in Endlosschleife
 
-    //     // Wenn barrierefrei deaktiviert ist, keine Aufzüge verwenden
-    //     if (!this.is_barrierfree && node.node_type === 'elevator') {
-    //         return false;
-    //     }
+    expand_node(node_id) {
+        delete this.open_nodes[node_id];
+        let parent_node = this.nodes[node_id];
 
-    //     // Überprüfen, ob ein Etagenwechsel stattfindet und ob der Knotentyp dafür geeignet ist
-    //     if (node.floor !== parentNode.mapnode.floor) {
-    //         if (this.is_barrierfree && node.node_type !== 'elevator') {
-    //             return false;
-    //         }
-    //         if (!this.is_barrierfree && node.node_type !== 'stairs') {
-    //             return false;
-    //         }
-    //     }
+        for (let mapnode_id of parent_node.mapnode.get_connectednodes()) {
+            if (!parent_node.mapnode.compare_mapnodes(mapnode_id)) {
+                let connected_node = this.mapnodes_list[mapnode_id];
+                if (!this.check_if_node_exists(connected_node.id) && this.is_node_valid_for_path(connected_node)) {
+                    this.add_node(node_id, connected_node);
+                }
+            }
+        }
+    }
 
-    //     return true;
-    // }
+    is_node_valid_for_path(node) {
+
+        if (node.node_type === 'Elevator') {
+            let testVariable = 0;
+        }
+
+        if (this.is_barrierfree === "Ja" && node.node_type === 'Stairs') {
+            return false;
+        }
+
+         // Wenn barrierefrei deaktiviert ist, keine Aufzüge verwenden
+        if (this.is_barrierfree === "Nein" && node.node_type === 'Elevator' ) {
+            return false;
+        }
+
+        return true;
+    }
     
     // Gibt den berechneten Pfad zurück
     get_path(node_id) {

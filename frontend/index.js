@@ -24,10 +24,9 @@ let circle_radius = 5;
 let clickedNode = false;
 
 // Variablen für Route
-let startOption = null;
-let endOption = null;  
-let isBarrierFree = false;
-let selectedExtraStops = [];
+let startOption = null; let endOption = null;  
+let isBarrierFree = "Nein";
+// let selectedExtraStops = [];
 
 // Liste von Koordinaten für die Linie
 var linePoints = [
@@ -310,7 +309,12 @@ function loadRouteToForm(startId, endId, isBarrierFree, extrastops, xlinePoints)
 
     startNodeSelect.val(startId).trigger('change');
     endNodeSelect.val(endId).trigger('change');
-    barrierFreeCheckbox.checked = isBarrierFree === 'Ja';
+    console.log(document.getElementById('barrierfree'))
+    if (barrierFreeCheckbox.checked) {
+        isBarrierFree = 'Ja';
+    } else {
+        isBarrierFree = 'Nein';
+    }
 
     const extraStopsArray = extrastops.split(', ');
     extraStopsSelect.val(extraStopsArray).trigger('change');
@@ -318,9 +322,7 @@ function loadRouteToForm(startId, endId, isBarrierFree, extrastops, xlinePoints)
     draw();
 }
 
-window.onload = function() {
-    getLastRoutes();
-};
+
 
 function saveRoute(startId, endId, isBarrierFree, extrastops, linePoints) { //no need to call up controller anymore as client saves the last route
     const newRoute = { startId, endId, isBarrierFree, extrastops, linePoints };
@@ -343,9 +345,9 @@ function addRouteToPreviousRoutes(startNode, endNode, extrastops, linePoints) {
 
 
 window.calculateRoute = function() {
-    //let startOption = document.getElementById('startNode').value;
-    //let endOption = document.getElementById('endNode').value;
-    //var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
+    // let startOption = document.getElementById('startNode').value;
+    // let endOption = document.getElementById('endNode').value;
+    var isBarrierFree = document.getElementById('barrierfree').checked ? 'Ja' : 'Nein';
     const selectedExtraStops = Array.from(document.getElementById('extrastops').selectedOptions)
         .map(option => option.value).join(', ');
 
@@ -379,7 +381,6 @@ document.getElementById('button3').addEventListener('click', function() {
     draw();
 });
 
-img.onload = draw;
 
 
 // *_*_*_*_*_*_* New *_*_*_*_*_*_*
@@ -394,18 +395,16 @@ function showStartpointSelection() {
     contentArea.innerHTML = '';
 
     // Text für Ziel
-    const endPointLabel = document.createElement('label');
-    endPointLabel.textContent = 'Start: ';
-    endPointLabel.setAttribute('for', 'endNode');
+    const startPointLabel = document.createElement('label');
+    startPointLabel.textContent = 'Start: ';
+    startPointLabel.setAttribute('for', 'startNode');
 
     // Dropdown-Menü für Endpunktauswahl
-    const endPointSelect = document.createElement('select');
-    endPointSelect.id = 'endNode';
-    endPointSelect.innerHTML = `
+    const startPointSelect = document.createElement('select');
+    startPointSelect.id = 'startNode';
+    startPointSelect.innerHTML = `
              <select id="endNode">
              <div id="endNodeOptions" class="dropdown-container">
-                 <option value="A.1.1a">A.1.1a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-                 <option value="A.1.1b">A.1.1b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
                  <option value="B.1.01">B.1.01</option>
                  <option value="B.1.02">B.1.02</option>
                  <option value="B.1.03">B.1.03</option>
@@ -535,20 +534,20 @@ function showStartpointSelection() {
      const continueButton = document.createElement('button');
           continueButton.textContent = 'Weiter';
           continueButton.addEventListener('click', function() {
-            startOption = document.getElementById('endNode').value;
+            startOption = document.getElementById('startNode').value;
             showEndpointSelection();
           });
 
     // Append der Elemente zur Ziel-Auswahl Ansicht in der content area
-    contentArea.appendChild(endPointLabel);
-    contentArea.appendChild(endPointSelect);
+    contentArea.appendChild(startPointLabel);
+    contentArea.appendChild(startPointSelect);
     contentArea.appendChild(chooseOnMapButton);
     contentArea.appendChild(continueButton);
 
 
     // Select2 für endNode dropdown und Zwischenstopps
     $(document).ready(function() {
-        $('#endNode').select2();
+        $('#startNode').select2();
     });
 };
 
@@ -566,14 +565,7 @@ function showEndpointSelection() {
         showStartpointSelection();
     });
 
-    function resetContentArea() {
-        document.getElementById('content-area').innerHTML = initialContent;
-
-        $('#startNode').select2();
-        $('#endNode').select2();
-        $('#extrastops').select2();
-    }
-
+    //document.getElementById('barrierfree').style.display = 'none';
     // Text für Ziel
     const endPointLabel = document.createElement('label');
     endPointLabel.textContent = 'Ziel: ';
@@ -585,8 +577,6 @@ function showEndpointSelection() {
     endPointSelect.innerHTML = `
              <select id="endNode">
              <div id="endNodeOptions" class="dropdown-container">
-                 <option value="A.1.1a">A.1.1a</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
-                 <option value="A.1.1b">A.1.1b</option> <!-- das wird erstmal nicht gehen, muss geändert werden-->
                  <option value="B.1.01">B.1.01</option>
                  <option value="B.1.02">B.1.02</option>
                  <option value="B.1.03">B.1.03</option>
@@ -740,6 +730,12 @@ function showAdditionalOptions() {
     const contentArea = document.getElementById('content-area');
     contentArea.innerHTML = '';
 
+    // Zurück zu Startpunktauswahl Button
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Zurück zur Startpunktauswahl';
+    backButton.addEventListener('click', function() {
+        showStartpointSelection();
+    });
 
     const extrastopsLabel = document.createElement('label');
     extrastopsLabel.textContent = 'Zwischenstopp: ';
@@ -748,7 +744,7 @@ function showAdditionalOptions() {
     const extraStopsSelect = document.createElement('select');
     extraStopsSelect.id = 'extrastops';
     extraStopsSelect.multiple = true; // For multiple selection
-    const extraStopsOptions = ["Aufzug", "Snackautomat", "Kaffeeautomat", "WC"];
+    const extraStopsOptions = ["Aufzug", "Snackautomat", "Kaffeeautomat", "Toilet"];
     extraStopsOptions.forEach(optionValue => {
         let option = document.createElement('option');
         option.value = optionValue;
@@ -776,6 +772,7 @@ function showAdditionalOptions() {
 
 
     // Append der Elemente zur "Extra Optionen" Ansicht in der content area
+    contentArea.appendChild(backButton);
     contentArea.appendChild(extrastopsLabel);
     contentArea.appendChild(extraStopsSelect);
     contentArea.appendChild(barrierFreeCheckbox);
@@ -790,8 +787,28 @@ function showAdditionalOptions() {
 
 };
 
+function initializeUI() {
+    // Erstellen Sie die Checkbox, falls sie noch nicht vorhanden ist
+    let barrierFreeCheckbox = document.getElementById('barrierfree');
+    if (!barrierFreeCheckbox) {
+        barrierFreeCheckbox = document.createElement('input');
+        barrierFreeCheckbox.type = 'checkbox';
+        barrierFreeCheckbox.id = 'barrierfree';
 
-showStartpointSelection();
+        // Fügen Sie die Checkbox an die gewünschte Stelle im DOM ein
+        // Zum Beispiel könnte dies ein Element im `content-area` sein
+        const contentArea = document.getElementById('content-area');
+        contentArea.appendChild(barrierFreeCheckbox);
+    }
+}
+
+img.onload = draw;
+
+window.onload = function() {
+    showStartpointSelection();
+    //initializeUI();
+    getLastRoutes();
+};
 
 
 
